@@ -46,10 +46,29 @@ phone-style app with four screens: **Home, Directory, Calendar, and Emergency.**
 ## 2. Who runs it (accounts & access)
 
 - **GitHub organization:** `31fwpa`
-- **Repository:** `github.com/31fwpa/AppFiles` *(the code lives here)*
+- **Repository:** `github.com/31fwpa/aviano-app` *(the code lives here)*
 - **The administrator controls who has access.** As admin you decide who can
   *edit* (push changes) and who can only *read*. Most content editors only need
   to touch data files — they don't need access to the code.
+
+### Where the project lives on this computer
+
+The working copy is at:
+
+```
+C:\Users\beans\Claude\dev\AvianoApp
+```
+
+> **⚠️ Do NOT store this project inside OneDrive (or Dropbox / Google Drive).**
+> Git keeps its history in thousands of tiny files inside a hidden `.git` folder.
+> OneDrive tries to sync every one of them in real time, and the two backup
+> systems fight: at best you get "deletion failed" / "device or resource busy"
+> errors, and at worst OneDrive corrupts the repository. You already have a cloud
+> backup — it's GitHub. Keep the repo in a plain local folder like
+> `C:\Users\...\dev\`, **never** under a cloud-synced folder.
+>
+> _(This project was originally created inside OneDrive and moved out for exactly
+> this reason. If you ever clone it fresh, clone it to a non-synced folder.)_
 
 > **Handoff checklist when an admin leaves:** transfer GitHub org ownership,
 > Supabase project ownership, and the Lovable account to the successor *before*
