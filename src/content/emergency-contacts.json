@@ -1,0 +1,26 @@
+[
+  {
+    "id": "emergency-1",
+    "label": "Suicide & Crisis Lifeline",
+    "phone": "988",
+    "category": "Emergency",
+    "notes": "24/7 suicide and crisis support",
+    "sort_order": 1
+  },
+  {
+    "id": "emergency-2",
+    "label": "On Base Emergencies",
+    "phone": "043-430-1911",
+    "category": "Emergency",
+    "notes": "Police, fire, medical on base",
+    "sort_order": 2
+  },
+  {
+    "id": "emergency-3",
+    "label": "Off Base Emergency",
+    "phone": "112",
+    "category": "Emergency",
+    "notes": "Italian single emergency number",
+    "sort_order": 3
+  }
+]

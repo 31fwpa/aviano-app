@@ -1,0 +1,109 @@
+{
+  "er_name": "Ospedale Santa Maria degli Angeli — Pronto Soccorso",
+  "er_address": "Via Montereale 24, 33170 Pordenone PN, Italy",
+  "er_lat": "45.9665",
+  "er_lng": "12.6491",
+  "guidance": "In a life-threatening emergency on base, dial 911 from a base phone or 0434-30-7911 from a cell. Off base, dial 112 for any emergency. For non-emergency medical referrals, contact Tricare during business hours at +39 0434 30 5792 / 5782.",
+  "important_numbers": {
+    "section_enabled": true,
+    "entries": [
+      {
+        "name": "International SOS (ISOS) Telephonic Language Assistance",
+        "phone": "335-560-1235",
+        "extension": ""
+      },
+      {
+        "name": "Veterans Crisis Line",
+        "phone": "008-001-2738255",
+        "extension": ""
+      },
+      {
+        "name": "Air Force OSI Hotline",
+        "phone": "877-246-1453",
+        "extension": ""
+      },
+      {
+        "name": "Command Post",
+        "phone": "043-430-3100",
+        "extension": ""
+      },
+      {
+        "name": "Crime Stop Anonymous",
+        "phone": "043-430-3232",
+        "extension": ""
+      },
+      {
+        "name": "LE Desk",
+        "phone": "390-434-307200",
+        "extension": ""
+      },
+      {
+        "name": "Military Crisis Line",
+        "phone": "008-003-4296477",
+        "extension": ""
+      },
+      {
+        "name": "Off Base Medical Emergency",
+        "phone": "118",
+        "extension": ""
+      },
+      {
+        "name": "Poison Control — Transfer to US Poison Control",
+        "phone": "043-430-2147",
+        "extension": ""
+      },
+      {
+        "name": "Sexual Assault Prevention & Response",
+        "phone": "043-430-7272",
+        "extension": ""
+      },
+      {
+        "name": "Domestic Abuse Victims Advocate",
+        "phone": "393-358-014927",
+        "extension": ""
+      }
+    ]
+  },
+  "afpaas": {
+    "section_enabled": true,
+    "name": "AFPAAS",
+    "url": "https://afpaas.af.mil/cas/login?service=https%3A%2F%2Fafpaas.af.mil%2F"
+  },
+  "resources": {
+    "section_enabled": true,
+    "entries": [
+      {
+        "name": "International SOS (ISOS) Telephonic Language",
+        "url": "https://www.tricare-overseas.com/beneficiaries/resources/real-time-language-assistance"
+      },
+      {
+        "name": "Armed Services Blood Program",
+        "url": "https://www.militarydonor.com/"
+      },
+      {
+        "name": "Red Cross",
+        "url": "https://www.redcross.org/contact-us/"
+      },
+      {
+        "name": "SAPR",
+        "url": "https://www.sapr.mil/"
+      },
+      {
+        "name": "SARC Contacts",
+        "url": "https://www.sexualassaultpreventionresponse.af.mil/library/sarccontacts/index.asp"
+      },
+      {
+        "name": "DoD Safe Helpline",
+        "url": "https://safehelpline.org/"
+      },
+      {
+        "name": "Military OneSource",
+        "url": "https://www.militaryonesource.com/"
+      },
+      {
+        "name": "Air Force OSI Tip Line",
+        "url": "https://www.tip411.com/tips/new?alert_group_id=21111"
+      }
+    ]
+  }
+}
