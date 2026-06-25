@@ -24,7 +24,9 @@
 6. [How the app is built _(to be written)_](#6-how-the-app-is-built)
 7. [Editing content (phone numbers, events, etc.) _(to be written)_](#7-editing-content)
 8. [Deploying / publishing changes _(to be written)_](#8-deploying--publishing-changes)
-9. [Glossary](#9-glossary)
+9. [Going native — app store roadmap](#9-going-native--app-store-roadmap)
+10. [Key decisions on record](#10-key-decisions-on-record)
+11. [Glossary](#11-glossary)
 
 ---
 
@@ -171,7 +173,157 @@ change actually reaches the live app that base members see.
 
 ---
 
-## 9. Glossary
+## 9. Going native — app store roadmap
+
+**Goal (mandated by leadership):** ship the app to both the **Apple App Store**
+and **Google Play Store**, with working **push notifications on phones**.
+
+### The core concept
+
+What we have today is a **PWA** — a website that installs from the browser. The
+app stores require a **native app** (an `.ipa` for Apple, an `.aab` for Google).
+You cannot upload the web files directly; the web app must be **wrapped** in a
+thin native shell the stores will accept. The chosen tool for this is
+**Capacitor**.
+
+> **Effort reality check.** Editing the app (content + screens) is cheap and
+> stays cheap. The *wrappers* are the time sink — new tools (Xcode, Android
+> Studio), two new push services (Apple's APNs, Google's FCM), and store review.
+> Budget your patience for the wrappers, not the app itself.
+
+### Architecture: bundle it offline (the app's content is static)
+
+Every screen reads its data from JSON files bundled into the app at build time —
+there is **no live server call to display a page**. So the app is designed to be
+**bundled inside the native package and run fully offline.** This is deliberate
+and correct: this is a base emergency app, and the emergency numbers must work
+with **no signal**.
+
+> **"Works offline" and "has push notifications" are two different things.**
+>
+> | Function | Needs internet? | Why |
+> | --- | --- | --- |
+> | Showing the screens (directory, emergency…) | No | The data is bundled in the app. |
+> | Receiving a push | Yes, at that moment | Apple/Google must deliver it. |
+> | Registering for push (first launch) | Yes, once | The app fetches a device token. |
+> | **Sending** a push (admin broadcast) | Yes — needs a **cloud server** | Something must hold the APNs/FCM credentials and fan out. |
+>
+> So: **the app runs offline; push, by nature, does not.** Sending push needs a
+> small cloud component that is **not** bundled in the app (see below).
+
+### Two technical wrinkles to know
+
+1. **The app is currently configured for server-rendering (SSR).** See
+   `vite.config.ts` (it builds a server entry and targets Cloudflare). To bundle
+   the app offline for Capacitor, it must instead produce a **static client
+   build** — a plain folder of HTML/JS/CSS that runs from local files. The
+   *content* is static, so this is very likely doable, but converting the build
+   target from "SSR" to "static bundle" is the real work of the offline path and
+   should be verified as cleanly supported before promising a date.
+2. **No Cloudflare needed to serve the app.** Because the app is bundled inside
+   the native package, you do **not** need to host it at a public URL to ship it.
+   (`wrangler.jsonc` / Cloudflare were never set up, and the offline approach
+   doesn't require them.)
+3. **But you DO need a small cloud function to *send* notifications.** This is
+   where keeping Supabase pays off: Supabase can host both the
+   `push_subscriptions` table *and* a small "Edge Function" that performs the
+   actual send. The piece that was almost deleted is exactly the cloud component
+   the offline app still needs for push.
+4. **Apple may reject "just a website in a wrapper"** (App Store Guideline 4.2).
+   An offline, official base app *with real push notifications* has a strong
+   case, but expect a review revision or two.
+
+### The phases (in order)
+
+| Phase | What happens | Difficulty |
+| --- | --- | --- |
+| 1. Produce a static client build | Convert the SSR build target so it outputs a plain HTML/JS/CSS folder Capacitor can bundle and run offline. No Cloudflare/hosting needed. | Moderate |
+| 2. Add Capacitor, generate `ios/` + `android/` projects | `npm install @capacitor/core`, init, add platforms. | Moderate |
+| 3. **Rework push to native** | Set up Firebase (FCM) for Android + APNs for iOS; swap web-push/VAPID for `@capacitor/push-notifications`; update the server to fan out via FCM/APNs. | **Hard — the real engineering** |
+| 4. Build & test on real devices | Android Studio (Windows OK) + Xcode (Mac required). | Fiddly |
+| 5. Store listings + submit | Icons, screenshots, descriptions, privacy info, review. | Tedious |
+
+**Phase 3 is the bulk of the work.** Wrapping the UI is nearly easy; rebuilding
+the notification pipeline onto Apple's and Google's native services is a genuine
+backend project.
+
+### Recommended sequence: **Android first, then iOS**
+
+Android is cheaper, builds on Windows, has no "thin wrapper" review risk, and its
+push (FCM) is simpler to stand up. Getting the full pipeline working once on
+Android teaches everything needed before tackling Apple's stricter process.
+
+### Prerequisites & costs
+
+- **Apple Developer Program** — $99/year, and a **Mac is required** to build/submit iOS.
+- **Google Play Developer** — $25 one-time, buildable from Windows.
+- Both stores **manually review** submissions; plan for revisions.
+
+---
+
+## 10. Key decisions on record
+
+Decisions made deliberately, with the reasoning, so future maintainers don't
+re-litigate them or undo them by mistake.
+
+### Do NOT delete the Supabase files (yet)
+
+The `src/integrations/supabase/` folder and the top-level `supabase/` folder
+**look** unused because there is no login in the app. **Leave them alone.** Two
+concrete reasons:
+
+1. **They are load-bearing, not litter.** `src/start.ts` imports
+   `attachSupabaseAuth` from `src/integrations/supabase/auth-attacher.ts` and
+   wires it into the server's startup. Delete the folder and the server won't
+   boot.
+2. **Push notifications need a database.** Supabase already contains a
+   `push_subscriptions` table — exactly the kind of store the native push work
+   (Phase 3 above) will likely reuse to hold each device's token.
+
+> **Principle:** "looks unused" is a hypothesis, not a fact. Before deleting
+> anything, search the code for what *imports* it. *Dead* code (nothing
+> references it) is safe to remove; *dormant* code (wired in but idle) is a trap.
+> Git keeps full history, so there's never a rush — delete when you *know*, not
+> when you *guess*. Revisit this decision after Phase 3.
+
+### Push notifications: Supabase Edge Function + FCM (free)
+
+**Security sign-off:** leadership confirmed this app holds nothing the DoD
+restricts from public sharing, so commercial managed cloud is approved. We
+therefore chose the easiest free path (no government infrastructure required).
+
+**The chosen design:**
+
+- **Sender:** a single **Supabase Edge Function** (serverless — runs only when an
+  alert is sent, $0 at this volume). It holds the FCM credentials and reads
+  device tokens from the existing `push_subscriptions` table.
+- **Delivery:** **Firebase Cloud Messaging (FCM)** delivers to **both** platforms
+  — Android directly, and iPhone via Apple's APNs under the hood. One service,
+  not two.
+- **In the app:** Capacitor's `@capacitor/push-notifications` registers each
+  device and stores its token.
+
+**Cost:** Supabase free tier + FCM = **$0 ongoing.** The only costs are the Apple
+($99/yr) and Google ($25 once) store memberships, covered by the office.
+
+**Rejected alternatives and why:**
+
+- *Base `.af.mil` website* — government-managed; you can't deploy custom code or
+  store credentials there.
+- *OneSignal (third-party push service)* — easiest technically, but a third party
+  holding the data; unnecessary once self-hosted Supabase was approved.
+- *Truly self-hosted / government cloud* — large ops lift (ATO, infrastructure);
+  not required given the security sign-off above.
+
+### The project must NOT live in OneDrive
+
+See [Section 2](#2-who-runs-it-accounts--access). Git and OneDrive fight over the
+`.git` folder. The repo was moved out of OneDrive to
+`C:\Users\beans\Claude\dev\AvianoApp` for this reason.
+
+---
+
+## 11. Glossary
 
 | Term | Meaning |
 | --- | --- |
