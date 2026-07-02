@@ -11,5 +11,11 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
+    // SPA mode: pre-render a static index.html shell at build time so the
+    // app can be bundled offline inside the Capacitor native wrapper.
+    spa: {
+      enabled: true,
+      prerender: { outputPath: "/index.html" },
+    },
   },
 });

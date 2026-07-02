@@ -22,7 +22,7 @@
 4. [The everyday workflow](#4-the-everyday-workflow)
 5. [Guardrails — rules that prevent disasters](#5-guardrails--rules-that-prevent-disasters)
 6. [How the app is built _(to be written)_](#6-how-the-app-is-built)
-7. [Editing content (phone numbers, events, etc.) _(to be written)_](#7-editing-content)
+7. [Editing content (phone numbers, events, etc.) → see CONTENT_EDITING_GUIDE.md](#7-editing-content)
 8. [Deploying / publishing changes _(to be written)_](#8-deploying--publishing-changes)
 9. [Going native — app store roadmap](#9-going-native--app-store-roadmap)
 10. [Key decisions on record](#10-key-decisions-on-record)
@@ -160,9 +160,15 @@ are auto-generated and should be left alone.
 
 ## 7. Editing content
 
-_(To be written.)_ This section will cover the day-to-day task: updating phone
-numbers, directory entries, calendar events, and emergency info — and which data
-files to change.
+**See [`CONTENT_EDITING_GUIDE.md`](CONTENT_EDITING_GUIDE.md)** — a standalone,
+plain-language guide written for content editors who don't code. It covers the
+five data files in `src/content/`, JSON basics, copy-paste recipes for every
+common task (announcements, phone numbers, events, emergency info), validation
+with jsonlint.com, and both publishing paths (local Git and editing directly on
+github.com in the browser).
+
+Hand that file to PA staff or anyone who maintains content. Keep this guide for
+the technical/administrative side.
 
 ---
 
