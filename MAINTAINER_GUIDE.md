@@ -21,7 +21,7 @@
 3. [Git & GitHub — the basics you actually need](#3-git--github--the-basics-you-actually-need)
 4. [The everyday workflow](#4-the-everyday-workflow)
 5. [Guardrails — rules that prevent disasters](#5-guardrails--rules-that-prevent-disasters)
-6. [How the app is built _(to be written)_](#6-how-the-app-is-built)
+6. [How the app is built → see HOW_THE_APP_WORKS.md](#6-how-the-app-is-built)
 7. [Editing content (phone numbers, events, etc.) → see CONTENT_EDITING_GUIDE.md](#7-editing-content)
 8. [Deploying / publishing changes _(to be written)_](#8-deploying--publishing-changes)
 9. [Going native — app store roadmap](#9-going-native--app-store-roadmap)
@@ -152,9 +152,11 @@ Two habits that prevent most problems:
 
 ## 6. How the app is built
 
-_(To be written.)_ This section will explain how the files fit together — the
-routes/screens, where the data lives, and which files are safe to edit vs. which
-are auto-generated and should be left alone.
+**See [`HOW_THE_APP_WORKS.md`](HOW_THE_APP_WORKS.md)** — the full architecture
+in plain language: the screen relay, the folder map (safe vs. off-limits), the
+build pipeline to the phone, and the design decisions. Companion guides:
+[`READING_THE_CODE.md`](READING_THE_CODE.md) (code literacy for non-programmers)
+and [`EDITING_THE_APP.md`](EDITING_THE_APP.md) (the safe change workflow).
 
 ---
 
