@@ -68,6 +68,7 @@ Two rules of the system:
 | `src/integrations/supabase/` | Cloud plumbing (see §5) | ❌ Leave alone |
 | `src/server.ts`, `src/start.ts` | Server startup/error plumbing | ❌ Leave alone |
 | `public/` | Icons, PWA manifest, `sw.js` (push receiver) | ⚠️ Rarely |
+| `assets/` | Source logo for app icons/splash. To regenerate all of them: `npx @capacitor/assets generate --android --ios --iconBackgroundColor '#0b1f3a' --iconBackgroundColorDark '#0b1f3a' --splashBackgroundColor '#0b1f3a' --splashBackgroundColorDark '#0b1f3a'` | ⚠️ Only to rebrand |
 | `android/` | The generated Android native project | ⚠️ Only via Capacitor commands |
 | `ios/` | The generated iOS native project (SPM — see `MAINTAINER_GUIDE.md` §10) | ⚠️ Only via Capacitor commands |
 | `dist/` | Build output — a disposable product | ❌ Never edit; rebuilt every time |
