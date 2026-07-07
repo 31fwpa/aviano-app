@@ -37,8 +37,8 @@ proposing to delete or restructure anything**).
   is required (workerd has no win-arm64 binary). On macOS, plain
   `npm install` should work.
 - **Dev preview:** `npm run dev` → http://localhost:8080 (verified).
-- **Ship to phones:** `npm run build` → `npx cap sync android` → native
-  build. Content edits need a store release to reach phones.
+- **Ship to phones:** `npm run build` → `npx cap sync android` (or `ios`) →
+  native build. Content edits need a store release to reach phones.
 
 ## Guardrails (non-negotiable)
 
@@ -48,11 +48,16 @@ proposing to delete or restructure anything**).
 - Never edit `src/routeTree.gen.ts` (auto-generated) or `dist/`.
 - Project must never live in OneDrive/iCloud-synced folders.
 
-## Current status (2026-07-06)
+## Current status (2026-07-07)
 
 - ✅ Static SPA build works; Android wrapper generated and committed
+- ✅ iOS wrapper generated on the Mac (`npx cap add ios --packagemanager SPM`)
+  and verified: simulator build succeeds via `xcodebuild`. Uses Swift Package
+  Manager, NOT CocoaPods — see `MAINTAINER_GUIDE.md` §10 before changing.
+  iOS pipeline: `npm run build` → `npx cap sync ios` → Xcode.
 - ✅ Full documentation suite in repo root
-- ⏭️ **Next up (on the Mac):** `npx cap add ios`, then Xcode build.
+- ⏭️ **Next up:** open `ios/App/App.xcodeproj` in Xcode, set the signing team
+  (needs the Apple Developer account), run on a simulator/device.
   After that: Android Studio build/signing, then Phase 3 (push via Supabase
   Edge Function + FCM — designed in `MAINTAINER_GUIDE.md` §10, not built).
 - ⏳ Pending externally: CAG decision on the spouse calendar integration.

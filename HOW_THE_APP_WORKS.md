@@ -12,8 +12,8 @@
 
 - The app itself is a web app (HTML/CSS/JavaScript) built with **React**.
 - For the app stores, it is wrapped in a thin native shell using **Capacitor**
-  — the `android/` folder is a real Android project with the website bundled
-  inside it. (iOS gets the same treatment via a Mac.)
+  — the `android/` and `ios/` folders are real native projects with the
+  website bundled inside them. (iOS builds require the Mac.)
 - It is **offline-first**: all content is packed inside the app, so the
   directory and emergency numbers work with no signal. Deliberate choice —
   it's an emergency-info app.
@@ -69,6 +69,7 @@ Two rules of the system:
 | `src/server.ts`, `src/start.ts` | Server startup/error plumbing | ❌ Leave alone |
 | `public/` | Icons, PWA manifest, `sw.js` (push receiver) | ⚠️ Rarely |
 | `android/` | The generated Android native project | ⚠️ Only via Capacitor commands |
+| `ios/` | The generated iOS native project (SPM — see `MAINTAINER_GUIDE.md` §10) | ⚠️ Only via Capacitor commands |
 | `dist/` | Build output — a disposable product | ❌ Never edit; rebuilt every time |
 | `vite.config.ts`, `capacitor.config.ts` | Build & wrapper settings | ⚠️ Rarely, deliberately |
 | `supabase/`, `.lovable/` | Database migrations / original spec | ❌ Historical + future use |
@@ -122,4 +123,4 @@ log in `MAINTAINER_GUIDE.md`.
 - **The embedded FSS Google Calendar** (Calendar screen) is the one piece of
   live web content — it needs internet and is maintained by FSS, not us.
 
-_Last updated: 2026-07-06._
+_Last updated: 2026-07-07._

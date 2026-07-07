@@ -323,6 +323,30 @@ therefore chose the easiest free path (no government infrastructure required).
 - *Truly self-hosted / government cloud* — large ops lift (ATO, infrastructure);
   not required given the security sign-off above.
 
+### iOS native dependencies: Swift Package Manager, NOT CocoaPods
+
+When the iOS wrapper was generated (2026-07-07), Capacitor offered two ways
+to manage the native iOS dependencies:
+
+- **CocoaPods** — the older default. A separate tool that must be installed
+  on the Mac (it needs Ruby, and realistically Homebrew too).
+- **Swift Package Manager (SPM)** — Apple's own dependency manager, built
+  into Xcode. Nothing extra to install, ever.
+
+We chose **SPM** (`npx cap add ios --packagemanager SPM`): fewer tools to
+install and maintain on the build Mac, and all official Capacitor plugins —
+including `@capacitor/push-notifications`, planned for Phase 3 — support it.
+
+**Practical consequences for whoever builds iOS:**
+
+- Open **`ios/App/App.xcodeproj`** in Xcode. (CocoaPods projects use a
+  `.xcworkspace` file instead — this project doesn't have one, and that's
+  normal.)
+- Native dependencies are declared in `ios/App/CapApp-SPM/Package.swift`.
+  That file is managed by `npx cap sync ios` — don't edit it by hand.
+- If a tutorial tells you to run `pod install`, it's written for the
+  CocoaPods path — skip that step; it doesn't apply here.
+
 ### The project must NOT live in OneDrive
 
 See [Section 2](#2-who-runs-it-accounts--access). Git and OneDrive fight over the
@@ -345,4 +369,5 @@ See [Section 2](#2-who-runs-it-accounts--access). Git and OneDrive fight over th
 
 ---
 
-_Last updated: 2026-06-25. Add your name and the date when you edit this guide._
+_Last updated: 2026-07-07 (iOS/SPM decision recorded during a Claude Code
+session). Add your name and the date when you edit this guide._

@@ -19,6 +19,7 @@
 | `npm install` fails: *"Unsupported platform: win32 arm64"* (`workerd`) | ARM Windows machine + an unused Cloudflare dependency | Use `npm install --ignore-scripts` (see `SETUP_NEW_COMPUTER.md` §5) |
 | `Deletion of directory .git/objects/... failed` during Git commands | The project is inside OneDrive/Dropbox | Move it out — see the OneDrive warning in `MAINTAINER_GUIDE.md` §2 |
 | `npm run dev` or `npm run build`: *"command not found"* / module errors | Dependencies not installed on this machine | Run `npm install --ignore-scripts` in the project folder |
+| `npm install` fails: *"EACCES: permission denied"* mentioning `~/.npm` (Mac) | npm was once run with `sudo`, leaving root-owned files in its cache | Run `sudo chown -R $(whoami) ~/.npm` once, then retry |
 | Change committed + pushed but **phones don't show it** | Store apps only update via releases | Rebuild + sync + ship a store update (`EDITING_THE_APP.md` §5) |
 | App works in preview but a page 404s after deploy | Route file renamed/removed | `git log --oneline -- src/routes` to see what changed; revert it |
 

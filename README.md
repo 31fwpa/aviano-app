@@ -25,12 +25,14 @@ the guide that matches what you need right now:
 | Fix something that broke | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
 | Know the Git workflow, decisions, and app-store roadmap | [`MAINTAINER_GUIDE.md`](MAINTAINER_GUIDE.md) |
 
-## 🗺️ Project status (2026-07-06)
+## 🗺️ Project status (2026-07-07)
 
 - ✅ App content & screens complete; offline-capable static build working
 - ✅ Capacitor Android wrapper generated (`android/`)
+- ✅ Capacitor iOS wrapper generated (`ios/`, Swift Package Manager —
+  simulator build verified)
 - ⬜ Android Studio build + signing + Play Store submission
-- ⬜ iOS wrapper (run `npx cap add ios` on the Mac) + App Store submission
+- ⬜ Xcode signing + App Store submission
 - ⬜ Push notifications (Supabase Edge Function + FCM — designed, not built;
   see `MAINTAINER_GUIDE.md` §9–10)
 - ⬜ Spouse calendar integration (pending CAG decision)
