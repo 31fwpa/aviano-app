@@ -58,8 +58,17 @@ proposing to delete or restructure anything**).
 - ✅ Full documentation suite in repo root
 - ✅ iOS app runs in the Xcode simulator (maintainer-verified 2026-07-07).
   No signing team set yet — simulators don't require one.
-- ⏭️ **Next up:** set the signing team in Xcode (needs the Apple Developer
-  account) to run on a real iPhone. Then Android Studio build/signing, then
-  Phase 3 (push via Supabase Edge Function + FCM — designed in
-  `MAINTAINER_GUIDE.md` §10, not built).
+- ✅ Android debug APK builds on the Mac (SDK installed headlessly at
+  `~/Library/Android/sdk`; JDK = Android Studio's bundled JBR 21)
+- ✅ **Phase 3 push code implemented** (2026-07-07): `src/lib/push.ts` +
+  `device_push_tokens` migration + `send-push` Edge Function. Both platforms
+  verified compiling with the plugin. NOT yet live — needs account-based
+  setup (Firebase project, Supabase deploy + secrets, APNs key). The
+  checklist is `PUSH_NOTIFICATIONS.md`; decisions in `MAINTAINER_GUIDE.md` §10.
+- ⚠️ The live Supabase project (`tpmnmsrbcnrhpihuzrcz`) is NOT in the
+  maintainer's personal Supabase account (likely Lovable-managed) — AI
+  sessions can't reach it via the Supabase connector; deploys go through
+  `npx supabase` CLI or the dashboard.
+- ⏭️ **Next up:** `PUSH_NOTIFICATIONS.md` §3 (Android push, free) → §4
+  (iOS push, needs Apple Developer) → store signing/submissions.
 - ⏳ Pending externally: CAG decision on the spouse calendar integration.

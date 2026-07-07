@@ -314,6 +314,22 @@ therefore chose the easiest free path (no government infrastructure required).
 **Cost:** Supabase free tier + FCM = **$0 ongoing.** The only costs are the Apple
 ($99/yr) and Google ($25 once) store memberships, covered by the office.
 
+**Update 2026-07-07 — Phase 3 code is built.** App-side registration
+(`src/lib/push.ts`), the `device_push_tokens` table (migration in
+`supabase/migrations/`), and the `send-push` Edge Function are all in the
+repo. What remains is account-based setup — the full checklist is
+`PUSH_NOTIFICATIONS.md`. Two decisions made during implementation:
+
+1. **Sender auth is a shared secret header (`x-admin-key`), not user
+   accounts.** The app has no login system, so "is the caller an admin"
+   can't be answered with user JWTs. A long random secret stored as an Edge
+   Function secret is simple, revocable in one command, and fits the single
+   sender (PA/admin) reality. Revisit if the app ever gets real logins.
+2. **iOS needs the Firebase SDK added in Xcode before iOS delivery works**
+   (FCM can't address raw Apple push tokens). Until then, iOS devices store
+   Apple-format tokens that the sender safely prunes. Android needs no such
+   step. Details: `PUSH_NOTIFICATIONS.md` §4.
+
 **Rejected alternatives and why:**
 
 - *Base `.af.mil` website* — government-managed; you can't deploy custom code or

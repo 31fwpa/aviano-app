@@ -9,8 +9,10 @@ import {
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Home, BookUser, Calendar as CalendarIcon, Siren } from "lucide-react";
+import { Capacitor } from "@capacitor/core";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { initNativePush } from "@/lib/push";
 
 import appCss from "../styles.css?url";
 
@@ -119,10 +121,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
 
   useEffect(() => {
-    // Register service worker for push notifications (production only)
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+    // Native apps (iOS/Android): register for push via FCM/APNs and store
+    // the device token. Browsers: keep the old web-push service worker.
+    if (Capacitor.isNativePlatform()) {
+      initNativePush((link) => router.history.push(link));
+    } else if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       const host = window.location.hostname;
       const isPreview = host.includes("id-preview--") || host.includes("lovableproject.com");
       const inIframe = (() => { try { return window.self !== window.top; } catch { return true; } })();
@@ -130,7 +136,7 @@ function RootComponent() {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
       }
     }
-  }, [queryClient]);
+  }, [queryClient, router]);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -23,6 +23,7 @@ the guide that matches what you need right now:
 | Learn to read the code files | [`READING_THE_CODE.md`](READING_THE_CODE.md) |
 | Change screens, text, links, or styling | [`EDITING_THE_APP.md`](EDITING_THE_APP.md) |
 | Fix something that broke | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
+| Finish setting up / send push notifications | [`PUSH_NOTIFICATIONS.md`](PUSH_NOTIFICATIONS.md) |
 | Know the Git workflow, decisions, and app-store roadmap | [`MAINTAINER_GUIDE.md`](MAINTAINER_GUIDE.md) |
 
 ## 🗺️ Project status (2026-07-07)
@@ -31,10 +32,12 @@ the guide that matches what you need right now:
 - ✅ Capacitor Android wrapper generated (`android/`)
 - ✅ Capacitor iOS wrapper generated (`ios/`, Swift Package Manager —
   simulator build verified)
-- ⬜ Android Studio build + signing + Play Store submission
-- ⬜ Xcode signing + App Store submission
-- ⬜ Push notifications (Supabase Edge Function + FCM — designed, not built;
-  see `MAINTAINER_GUIDE.md` §9–10)
+- ✅ Both platforms verified compiling (iOS simulator build + Android debug APK)
+- ⬜ Play Store signing + submission · App Store signing + submission
+- 🟨 Push notifications — **code complete** (app registration, database,
+  Edge Function sender); needs the account-based setup in
+  [`PUSH_NOTIFICATIONS.md`](PUSH_NOTIFICATIONS.md) (Firebase, Supabase
+  deploy, APNs key)
 - ⬜ Spouse calendar integration (pending CAG decision)
 
 ## 🤖 Maintaining this with an AI assistant
