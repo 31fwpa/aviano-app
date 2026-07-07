@@ -16,6 +16,13 @@ const DUPLICATE_ROW = "23505";
 export async function initNativePush(onNotificationTap: (link: string) => void) {
   if (!Capacitor.isNativePlatform()) return;
 
+  // HARD GATE: registering without the Firebase config in place crashes the
+  // Android app NATIVELY (IllegalStateException on the plugin thread — a JS
+  // try/catch cannot catch it; verified on-device 2026-07-07). Only builds
+  // made after completing PUSH_NOTIFICATIONS.md setup, with
+  // VITE_PUSH_ENABLED=true in .env, attempt registration.
+  if (import.meta.env.VITE_PUSH_ENABLED !== "true") return;
+
   try {
     let status = await PushNotifications.checkPermissions();
     if (status.receive === "prompt" || status.receive === "prompt-with-rationale") {

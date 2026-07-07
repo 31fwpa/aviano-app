@@ -94,14 +94,26 @@ npx supabase secrets set FCM_SERVICE_ACCOUNT="$(cat ~/Downloads/<the-key-file>.j
 > dashboard's SQL Editor, create the function in the dashboard's Edge
 > Functions editor, and add the two secrets under Edge Functions → Secrets.)*
 
-### D. Make sure builds include the Supabase address
+### D. Make sure builds include the Supabase address — and switch push on
 
 The app can only store its token if `.env` (with `VITE_SUPABASE_URL` and
 `VITE_SUPABASE_PUBLISHABLE_KEY`) exists **at build time**. `.env` lives only
 on maintainer machines (see `HOW_THE_APP_WORKS.md` §6) — if you're building
 on a machine that doesn't have it, copy it from the machine that does,
-hand-to-hand, never through email/chat/cloud. Without it the app still runs;
-it just can't register for push.
+hand-to-hand, never through email/chat/cloud.
+
+Then add one more line to `.env`:
+
+```
+VITE_PUSH_ENABLED=true
+```
+
+> **Why this flag exists (learned the hard way):** if the app attempts push
+> registration before `google-services.json` is in place, the Android app
+> **crashes natively on every launch** — the failure happens below the
+> JavaScript layer where it can't be caught (verified on a real phone,
+> 2026-07-07). So push registration stays off until this flag is set at
+> build time, and the flag must only be set **after** step A is done.
 
 ### E. Test on Android
 
@@ -198,7 +210,8 @@ curl -X POST https://tpmnmsrbcnrhpihuzrcz.supabase.co/functions/v1/send-push \
 
 | Symptom | Likely cause | Fix |
 | --- | --- | --- |
-| No permission prompt on launch | Permission previously denied | Phone Settings → Apps → Aviano AB → Notifications |
+| App crashes on every launch right after allowing notifications | Built with `VITE_PUSH_ENABLED=true` but `google-services.json` missing (§3 A) | Add the file and rebuild — or rebuild with the flag unset |
+| No permission prompt on launch | `VITE_PUSH_ENABLED` not set at build time, or permission previously denied | Set the flag + rebuild (§3 D); or phone Settings → Apps → Aviano AB → Notifications |
 | No row in `device_push_tokens` | Missing `.env` at build time, or (Android) missing `google-services.json`, or emulator without Google Play | See §3 D / A / E |
 | curl returns `401` | Wrong/missing `x-admin-key` | Check the secret value |
 | curl returns `500 ...not configured` | Function secrets not set | §3 C last two commands |

@@ -148,7 +148,10 @@ function RootComponent() {
 
 function AppShell() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col pb-20">
+    // Bottom padding must reserve the nav's real height: its content (~5rem)
+    // PLUS the device's safe-area inset, which the nav also adds — otherwise
+    // the last rows of content hide behind it.
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <main className="flex-1">
         <Outlet />
       </main>
