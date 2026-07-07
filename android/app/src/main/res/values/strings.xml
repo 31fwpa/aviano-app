@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">The Aviano App</string>
-    <string name="title_activity_main">The Aviano App</string>
+    <string name="app_name">Aviano Air Base</string>
+    <string name="title_activity_main">Aviano Air Base</string>
     <string name="package_name">mil.af.aviano</string>
     <string name="custom_url_scheme">mil.af.aviano</string>
 </resources>
