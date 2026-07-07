@@ -56,8 +56,10 @@ proposing to delete or restructure anything**).
   Manager, NOT CocoaPods — see `MAINTAINER_GUIDE.md` §10 before changing.
   iOS pipeline: `npm run build` → `npx cap sync ios` → Xcode.
 - ✅ Full documentation suite in repo root
-- ⏭️ **Next up:** open `ios/App/App.xcodeproj` in Xcode, set the signing team
-  (needs the Apple Developer account), run on a simulator/device.
-  After that: Android Studio build/signing, then Phase 3 (push via Supabase
-  Edge Function + FCM — designed in `MAINTAINER_GUIDE.md` §10, not built).
+- ✅ iOS app runs in the Xcode simulator (maintainer-verified 2026-07-07).
+  No signing team set yet — simulators don't require one.
+- ⏭️ **Next up:** set the signing team in Xcode (needs the Apple Developer
+  account) to run on a real iPhone. Then Android Studio build/signing, then
+  Phase 3 (push via Supabase Edge Function + FCM — designed in
+  `MAINTAINER_GUIDE.md` §10, not built).
 - ⏳ Pending externally: CAG decision on the spouse calendar integration.
