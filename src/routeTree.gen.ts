@@ -9,16 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SecurityForcesRouteImport } from './routes/security-forces'
 import { Route as PaRouteImport } from './routes/pa'
+import { Route as MedicalGroupRouteImport } from './routes/medical-group'
+import { Route as LrsRouteImport } from './routes/lrs'
 import { Route as HousingRouteImport } from './routes/housing'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SecurityForcesRoute = SecurityForcesRouteImport.update({
+  id: '/security-forces',
+  path: '/security-forces',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaRoute = PaRouteImport.update({
   id: '/pa',
   path: '/pa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicalGroupRoute = MedicalGroupRouteImport.update({
+  id: '/medical-group',
+  path: '/medical-group',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LrsRoute = LrsRouteImport.update({
+  id: '/lrs',
+  path: '/lrs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HousingRoute = HousingRouteImport.update({
@@ -53,7 +71,10 @@ export interface FileRoutesByFullPath {
   '/directory': typeof DirectoryRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
+  '/lrs': typeof LrsRoute
+  '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +82,10 @@ export interface FileRoutesByTo {
   '/directory': typeof DirectoryRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
+  '/lrs': typeof LrsRoute
+  '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +94,10 @@ export interface FileRoutesById {
   '/directory': typeof DirectoryRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
+  '/lrs': typeof LrsRoute
+  '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,9 +107,21 @@ export interface FileRouteTypes {
     | '/directory'
     | '/emergency'
     | '/housing'
+    | '/lrs'
+    | '/medical-group'
     | '/pa'
+    | '/security-forces'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/directory' | '/emergency' | '/housing' | '/pa'
+  to:
+    | '/'
+    | '/calendar'
+    | '/directory'
+    | '/emergency'
+    | '/housing'
+    | '/lrs'
+    | '/medical-group'
+    | '/pa'
+    | '/security-forces'
   id:
     | '__root__'
     | '/'
@@ -90,7 +129,10 @@ export interface FileRouteTypes {
     | '/directory'
     | '/emergency'
     | '/housing'
+    | '/lrs'
+    | '/medical-group'
     | '/pa'
+    | '/security-forces'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -99,16 +141,40 @@ export interface RootRouteChildren {
   DirectoryRoute: typeof DirectoryRoute
   EmergencyRoute: typeof EmergencyRoute
   HousingRoute: typeof HousingRoute
+  LrsRoute: typeof LrsRoute
+  MedicalGroupRoute: typeof MedicalGroupRoute
   PaRoute: typeof PaRoute
+  SecurityForcesRoute: typeof SecurityForcesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/security-forces': {
+      id: '/security-forces'
+      path: '/security-forces'
+      fullPath: '/security-forces'
+      preLoaderRoute: typeof SecurityForcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pa': {
       id: '/pa'
       path: '/pa'
       fullPath: '/pa'
       preLoaderRoute: typeof PaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medical-group': {
+      id: '/medical-group'
+      path: '/medical-group'
+      fullPath: '/medical-group'
+      preLoaderRoute: typeof MedicalGroupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lrs': {
+      id: '/lrs'
+      path: '/lrs'
+      fullPath: '/lrs'
+      preLoaderRoute: typeof LrsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/housing': {
@@ -155,7 +221,10 @@ const rootRouteChildren: RootRouteChildren = {
   DirectoryRoute: DirectoryRoute,
   EmergencyRoute: EmergencyRoute,
   HousingRoute: HousingRoute,
+  LrsRoute: LrsRoute,
+  MedicalGroupRoute: MedicalGroupRoute,
   PaRoute: PaRoute,
+  SecurityForcesRoute: SecurityForcesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

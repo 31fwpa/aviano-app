@@ -158,42 +158,6 @@ export type Database = {
         }
         Relationships: []
       }
-      events: {
-        Row: {
-          created_at: string
-          description: string | null
-          ends_at: string | null
-          id: string
-          location: string | null
-          starts_at: string
-          title: string
-          type: Database["public"]["Enums"]["event_type"]
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          ends_at?: string | null
-          id?: string
-          location?: string | null
-          starts_at: string
-          title: string
-          type: Database["public"]["Enums"]["event_type"]
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          ends_at?: string | null
-          id?: string
-          location?: string | null
-          starts_at?: string
-          title?: string
-          type?: Database["public"]["Enums"]["event_type"]
-          updated_at?: string
-        }
-        Relationships: []
-      }
       notifications: {
         Row: {
           body: string
@@ -221,33 +185,6 @@ export type Database = {
           sent_at?: string
           sent_by?: string | null
           title?: string
-        }
-        Relationships: []
-      }
-      push_subscriptions: {
-        Row: {
-          auth: string
-          created_at: string
-          endpoint: string
-          id: string
-          p256dh: string
-          user_agent: string | null
-        }
-        Insert: {
-          auth: string
-          created_at?: string
-          endpoint: string
-          id?: string
-          p256dh: string
-          user_agent?: string | null
-        }
-        Update: {
-          auth?: string
-          created_at?: string
-          endpoint?: string
-          id?: string
-          p256dh?: string
-          user_agent?: string | null
         }
         Relationships: []
       }
@@ -287,7 +224,6 @@ export type Database = {
     }
     Enums: {
       app_role: "admin"
-      event_type: "operational" | "recreational"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -416,7 +352,6 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin"],
-      event_type: ["operational", "recreational"],
     },
   },
 } as const

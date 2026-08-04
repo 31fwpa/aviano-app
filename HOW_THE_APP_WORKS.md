@@ -8,7 +8,7 @@
 
 ## 1. The big picture
 
-**The Aviano App is a website wearing a native-app costume.**
+**Aviano Air Base is a website wearing a native-app costume.**
 
 - The app itself is a web app (HTML/CSS/JavaScript) built with **React**.
 - For the app stores, it is wrapped in a thin native shell using **Capacitor**
@@ -37,12 +37,15 @@ src/routes/__root.tsx      the shared frame: <html>, bottom nav bar,
 src/routeTree.gen.ts       the URL map, AUTO-GENERATED — never edit
         ▼
 src/routes/<screen>.tsx    the page for that URL:
-        │                    /            index.tsx      (Home)
-        │                    /directory   directory.tsx
-        │                    /calendar    calendar.tsx
-        │                    /emergency   emergency.tsx
-        │                    /pa          pa.tsx          (Public Affairs)
-        │                    /housing     housing.tsx
+        │                    /                 index.tsx   (Home)
+        │                    /directory        directory.tsx
+        │                    /calendar         calendar.tsx
+        │                    /emergency        emergency.tsx
+        │                    /pa               pa.tsx       (Public Affairs)
+        │                    /housing          housing.tsx
+        │                    /security-forces  security-forces.tsx
+        │                    /medical-group    medical-group.tsx
+        │                    /lrs              lrs.tsx      (Logistics Readiness)
         ▼
 src/content/*.json         the DATA the screen displays
         ▼
@@ -123,5 +126,11 @@ log in `MAINTAINER_GUIDE.md`.
   the decision and rejected alternatives.
 - **The embedded FSS Google Calendar** (Calendar screen) is the one piece of
   live web content — it needs internet and is maintained by FSS, not us.
+- **LRS / Medical Group documents are linked, not bundled** — ~85 PDFs and
+  flyers live on the base website; `src/content/documents.json` maps each
+  filename to its URL, and unpublished ones show "Coming soon". Reasoning:
+  `MAINTAINER_GUIDE.md` §10.
+- **External links open in an in-app browser** (`src/lib/native.ts`) so
+  people aren't stranded outside the app with no way back.
 
-_Last updated: 2026-07-07._
+_Last updated: 2026-08-04._

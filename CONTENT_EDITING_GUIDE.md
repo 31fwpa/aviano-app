@@ -27,9 +27,12 @@ That's the whole job. You never touch anything outside `src/content/`.
 | --- | --- |
 | Announcements on the Home screen | `src/content/announcements.json` |
 | Phone book (Directory screen) | `src/content/directory.json` |
-| Calendar events | `src/content/events.json` |
 | Tap-to-call numbers on Emergency screen | `src/content/emergency-contacts.json` |
 | ER address, map location, guidance text | `src/content/emergency-content.json` |
+| Web links for LRS / Medical Group documents | `src/content/documents.json` |
+
+*(The Calendar screen needs no edits — it shows the 31 FSS Google Calendar
+live. See §4.)*
 
 **Everything else in the project is off-limits.** If a file doesn't live in
 `src/content/`, don't edit it. (Especially never touch a file called `.env` —
@@ -166,31 +169,56 @@ entries, none after the last). Then validate at jsonlint.com.
 
 ---
 
-## 4. Recipes: Calendar events
+## 4. Recipes: Calendar
 
-File: `src/content/events.json`.
+**Nothing to edit here.** The Calendar screen shows the **31 FSS Community
+Calendar** directly from Google — it is maintained by FSS in Google Calendar,
+not in this app. Whatever they publish appears automatically.
 
-> **Note:** this file is currently **empty** (just `[]`) — the Calendar screen
-> is showing only the embedded 31 FSS Google Calendar. That's normal. To add
-> app-native events, put entries inside the brackets:
+*(The app used to keep its own `events.json` list. It was removed in August
+2026 in favor of the single FSS calendar. If you find references to
+`events.json` in older notes, they're out of date.)*
+
+---
+
+## 4b. Recipes: Documents (PDFs and flyers)
+
+File: `src/content/documents.json`.
+
+The **LRS** and **Medical Group** screens list PDFs and info flyers — travel
+memos, pet shipping rules, clinic notices. The files themselves are **not
+inside the app**; they live on the base website, and this file tells the app
+where to find each one.
+
+Each line is `"filename": "web address"`. A file with an empty address shows
+as **"Coming soon"** in the app instead of a broken link — that's the safety
+net, and it's why an empty entry is never an emergency.
+
+**To publish a document:**
+
+1. Upload the PDF to the base website (whoever maintains it can do this).
+2. Copy its full web address — it must start with `https://`.
+3. Paste it between the quotes next to that filename:
 
 ```json
-[
-  {
-    "id": "town-hall-aug-2026",
-    "title": "Base Town Hall",
-    "type": "recreational",
-    "starts_at": "2026-08-15T17:00:00Z",
-    "ends_at": "2026-08-15T19:00:00Z",
-    "location": "Community Center",
-    "description": "Open forum with base leadership."
-  }
-]
+{
+  "APRT_1679062320.pdf": "https://www.31fss.com/documents/APRT.pdf",
+  "AvianoPetNonALetterCAO10June.pdf": ""
+}
 ```
 
-- **type** must be exactly `"operational"` or `"recreational"` — nothing else.
-- **starts_at** is required; **ends_at** may be `null`.
-- Past events hide themselves automatically — no cleanup needed.
+Above, the first document is live; the second still shows "Coming soon."
+
+- **Don't rename the filenames on the left** — the app matches on them.
+- The address must be reachable without a login, or people will hit a
+  sign-in wall instead of the document.
+- Tapping a document opens it in a browser window inside the app.
+
+> **Why not put the PDFs in the app?** They add ~24 MB, and every correction
+> would need a full app-store release. Linking means a corrected PDF is live
+> the moment it's uploaded. The trade-off: documents need internet, while the
+> directory and emergency screens keep working offline. Full reasoning is in
+> `MAINTAINER_GUIDE.md` §10.
 
 ---
 
@@ -261,9 +289,9 @@ maintainer can tell you the current cadence.
 | Hide announcement | `announcements.json` | `"published": false` |
 | Change a phone number | `directory.json` | Ctrl+F the office name |
 | Add an office | `directory.json` | copy an entry, keep category exact |
-| Add event | `events.json` | type = operational/recreational |
+| Publish a PDF/flyer | `documents.json` | paste the `https://` address; empty = "Coming soon" |
 | Emergency numbers | `emergency-contacts.json` | double-check with a second person |
 | ER / guidance text | `emergency-content.json` | `\n\n` between paragraphs |
 | Validate | jsonlint.com | every time, before publishing |
 
-_Last updated: 2026-07-02._
+_Last updated: 2026-08-04._

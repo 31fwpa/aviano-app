@@ -363,6 +363,77 @@ including `@capacitor/push-notifications`, planned for Phase 3 — support it.
 - If a tutorial tells you to run `pod install`, it's written for the
   CocoaPods path — skip that step; it doesn't apply here.
 
+### One calendar only: 31 FSS. CAG integration dropped (2026-08-04)
+
+The app once planned to pull in a second, spouse-facing calendar via the CAG.
+**That is no longer happening.** The Calendar screen embeds the **31 FSS
+Community Calendar** and nothing else.
+
+Why this is recorded rather than just deleted: the CAG integration sat on the
+roadmap as "pending an external decision" for months, and a future maintainer
+finding a half-referenced idea would reasonably try to revive it. It was
+dropped deliberately — one calendar, maintained by FSS in Google Calendar, is
+simpler to run and impossible to get out of sync with itself.
+
+Practical consequences:
+
+- The Calendar screen needs **no content maintenance** from this app. FSS
+  publishes to their Google Calendar; the app shows it live.
+- It is the app's one piece of live web content — it needs internet, unlike
+  every other screen.
+- The app's own `events.json` list and the `events` database table were
+  removed in the same cleanup (see the migration
+  `20260803080000_drop_events_table.sql`).
+
+### Merging work back from Lovable (2026-08-04)
+
+Design changes made in Lovable were delivered as a full folder copy
+(`App Changes/`) rather than through Git, so they had to be merged by hand.
+That export branched from an **older** commit — it predates all the native
+work — so blindly copying it over would have silently deleted the push
+pipeline, the icons, and the app identity. What was taken and what was
+refused, and why:
+
+**Taken:** the three new pages (Security Forces, Medical Group, LRS), the
+redesigned floating bottom nav, haptic feedback (`src/lib/haptic.ts`),
+native status-bar + in-app-browser behavior (`src/lib/native.ts`),
+accent-insensitive directory search, the simplified calendar (Google iframe
+only), and the corrected announcement/phone content.
+
+**Refused, and why it matters:**
+
+| Lovable file | Why it was NOT taken |
+| --- | --- |
+| `capacitor.config.ts` | Declared a *different app*: `appId` `mil.af.aviano.paconnect`, name "Aviano PA Connect", `webDir` `dist`. Adopting it would change the store identity (a new bundle ID cannot update an already-published app) and break the build path. |
+| `vite.config.ts` | Missing the SPA/prerender block — the app would stop producing a static offline bundle. |
+| `README-NATIVE.md` | Points at a different repo and tells you to install CocoaPods; contradicts the SPM decision above and the guides in this repo. |
+| Half of migration `20260708073034` | It dropped `public.notifications`. The `send-push` Edge Function writes to that table — it is the record of every broadcast sent to the base. Only the `push_subscriptions` half was kept (genuinely dead web-push). |
+
+> **The lesson worth keeping:** an export from a web builder is a *branch*,
+> not an update. Diff it, take the intent, and re-apply it on top of the
+> current code — never copy the folder over the repo.
+
+### Documents (PDFs and flyers) are linked, not bundled
+
+The LRS and Medical Group pages reference ~85 PDFs and info flyers. In
+Lovable those files live on Lovable's own CDN, at URLs that only resolve
+while the app is running on Lovable — inside the native app they are dead
+links. The decision (2026-08-04) is to **publish those files on the base
+website and link to them**, rather than bundling them in the app:
+
+- They are reference/planning documents, not emergency information — the
+  offline-critical content (numbers, procedures) stays bundled as JSON.
+- Linked files can be corrected without shipping a store update; a bundled
+  PDF would need a full release for every revision.
+- It keeps the app ~24 MB smaller.
+- Android's webview cannot display a bundled PDF anyway; an https link opens
+  cleanly in the in-app browser (`src/lib/native.ts`).
+
+`src/content/documents.json` maps each filename to its published URL. Until a
+URL is filled in, the pages show their built-in "Coming soon" state, so
+nothing ever renders as a broken link. Adding a document is a **content
+edit** — see `CONTENT_EDITING_GUIDE.md`.
+
 ### The project must NOT live in OneDrive
 
 See [Section 2](#2-who-runs-it-accounts--access). Git and OneDrive fight over the

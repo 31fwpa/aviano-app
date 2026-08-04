@@ -36,7 +36,7 @@ function PaPage() {
           <Megaphone className="size-7" />
           <div>
             <h1 className="text-2xl font-bold">Public Affairs</h1>
-            <p className="text-sm opacity-90 mt-1">Official channels and PA support</p>
+            <p className="text-sm opacity-90 mt-1">Official channels and Public Affairs support</p>
           </div>
         </div>
       </header>
@@ -67,7 +67,7 @@ function PaPage() {
             target="_blank"
             rel="noreferrer"
           >
-            <Megaphone className="size-5" /> Request PA support
+            <Megaphone className="size-5" /> Request Public Affairs support
           </a>
         </Button>
       </section>

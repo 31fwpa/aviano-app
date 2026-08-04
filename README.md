@@ -1,8 +1,9 @@
-# The Aviano App
+# Aviano Air Base
 
 The official mobile app for Aviano Air Base members — directory, calendar,
-housing, PA channels, and emergency information. Built as an offline-first web
-app, wrapped with Capacitor for the Apple App Store and Google Play.
+housing, PA channels, Security Forces, Medical Group, LRS, and emergency
+information. Built as an offline-first web app, wrapped with Capacitor for the
+Apple App Store and Google Play.
 
 - **Repo:** `github.com/31fwpa/aviano-app` · **App ID:** `mil.af.aviano`
 - **Stack:** React (TanStack Start) · Tailwind · static JSON content ·
@@ -38,7 +39,8 @@ the guide that matches what you need right now:
   Edge Function sender); needs the account-based setup in
   [`PUSH_NOTIFICATIONS.md`](PUSH_NOTIFICATIONS.md) (Firebase, Supabase
   deploy, APNs key)
-- ⬜ Spouse calendar integration (pending CAG decision)
+- ❌ Spouse/CAG calendar integration — **dropped** (2026-08-04). The Calendar
+  screen shows the 31 FSS calendar only.
 
 ## 🤖 Maintaining this with an AI assistant
 

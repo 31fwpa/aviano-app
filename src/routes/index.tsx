@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Siren, Phone, MapPin, ExternalLink, Megaphone, Home } from "lucide-react";
+import { Phone, MapPin, ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import wingShield from "@/assets/wing-shield.png";
 import announcementsData from "@/content/announcements.json";
 import type { Announcement } from "@/content/types";
@@ -33,23 +34,16 @@ function Index() {
         <p className="opacity-90 mt-2 text-sm">
           Your hub for base services, events, and emergency information.
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          <Button asChild variant="destructive" size="sm">
-            <Link to="/emergency"><Siren className="size-4" /> Emergency</Link>
-          </Button>
-          <Button asChild variant="secondary" size="sm">
-            <Link to="/directory"><Phone className="size-4" /> Directory</Link>
-          </Button>
-        </div>
       </header>
 
       <section className="px-5 py-6 max-w-xl mx-auto space-y-4">
+
         <Link
           to="/emergency"
-          className="flex items-center gap-3 p-4 rounded-lg border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 transition"
+          className="flex items-center gap-3 p-4 rounded-lg bg-destructive text-destructive-foreground hover:opacity-95 transition"
         >
-          <Siren className="size-5" />
-          <span className="font-medium">Emergency information</span>
+          <AlertTriangle className="size-5" />
+          <span className="font-semibold">Emergency</span>
         </Link>
 
         <div>
@@ -74,8 +68,24 @@ function Index() {
         <div className="grid grid-cols-2 gap-3">
           <QuickLink to="/calendar" icon={<MapPin className="size-5" />} label="Events" />
           <QuickLink to="/directory" icon={<Phone className="size-5" />} label="Phone book" />
-          <QuickLink to="/pa" icon={<Megaphone className="size-5" />} label="PA" />
+          <QuickLink to="/pa" icon={<Megaphone className="size-5" />} label="Public Affairs" />
           <QuickLink to="/housing" icon={<Home className="size-5" />} label="Housing" />
+          <QuickLink
+            to="/security-forces"
+            icon={<Shield className="size-5" />}
+            label="Security Forces"
+          />
+          <QuickLink
+            to="/medical-group"
+            icon={<Stethoscope className="size-5" />}
+            label="Medical Group"
+          />
+          <QuickLink
+            href="https://cobraclinic.notion.site/COBRA-Clinic-11ac0d2706634b7c92235684db45d7a2"
+            icon={<Heart className="size-5" />}
+            label="Cobra Clinic"
+          />
+          <QuickLink to="/lrs" icon={<Truck className="size-5" />} label="LRS" />
         </div>
         <Button asChild variant="outline" className="w-full">
           <a href="https://31fss.com/first-31-pcs-start/" target="_blank" rel="noopener noreferrer"><ExternalLink className="size-4" /> Newcomers</a>
@@ -85,14 +95,39 @@ function Index() {
   );
 }
 
-function QuickLink({ to, icon, label }: { to: string; icon: React.ReactNode; label: string }) {
-  return (
-    <Link
-      to={to}
-      className="flex items-center gap-3 p-4 rounded-lg border border-border bg-card hover:bg-accent transition"
-    >
+function QuickLink({
+  to,
+  href,
+  icon,
+  label,
+  className,
+}: {
+  to?: string;
+  href?: string;
+  icon: React.ReactNode;
+  label: string;
+  className?: string;
+}) {
+  const classes = cn(
+    "flex items-center gap-3 p-4 rounded-lg border border-border bg-card hover:bg-accent transition",
+    className,
+  );
+  const content = (
+    <>
       <div className="text-primary">{icon}</div>
       <span className="font-medium">{label}</span>
+    </>
+  );
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+        {content}
+      </a>
+    );
+  }
+  return (
+    <Link to={to!} className={classes}>
+      {content}
     </Link>
   );
 }

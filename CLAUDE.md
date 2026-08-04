@@ -27,8 +27,10 @@ proposing to delete or restructure anything**).
 
 ## Key facts
 
-- **App:** "The Aviano App" — offline-first info app for Aviano Air Base.
+- **App:** "Aviano Air Base" — offline-first info app for Aviano Air Base.
   App ID `mil.af.aviano`. Repo: `github.com/31fwpa/aviano-app`.
+  ⚠️ Lovable exports may claim `mil.af.aviano.paconnect` / "Aviano PA
+  Connect" — that is NOT this app's identity; never adopt it (see §10).
 - **Stack:** TanStack Start (React) in **SPA/static mode** (see
   `vite.config.ts`), Tailwind, content in `src/content/*.json` (NOT the
   database), Capacitor wrapper, Supabase reserved for push notifications.
@@ -71,4 +73,15 @@ proposing to delete or restructure anything**).
   `npx supabase` CLI or the dashboard.
 - ⏭️ **Next up:** `PUSH_NOTIFICATIONS.md` §3 (Android push, free) → §4
   (iOS push, needs Apple Developer) → store signing/submissions.
-- ⏳ Pending externally: CAG decision on the spouse calendar integration.
+- ✅ **Lovable design changes merged** (2026-08-04) from the `App Changes/`
+  folder export: 3 new pages (Security Forces, Medical Group, LRS), floating
+  bottom nav + haptics, in-app browser for external links, accent-insensitive
+  directory search, calendar simplified to the FSS iframe (events.json and
+  its table dropped). Merged by hand — the export predated all native work.
+  What was refused and why: `MAINTAINER_GUIDE.md` §10.
+- ⏭️ **Documents:** ~85 LRS/MDG PDFs need publishing to the base website,
+  then their URLs pasted into `src/content/documents.json` (a content edit —
+  `CONTENT_EDITING_GUIDE.md` §4b). They show "Coming soon" until then.
+- ❌ CAG/spouse calendar integration is **dropped** (2026-08-04) — FSS's
+  calendar is the single source. No longer pending; don't reopen it. See
+  `MAINTAINER_GUIDE.md` §10.

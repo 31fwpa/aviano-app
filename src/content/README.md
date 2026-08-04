@@ -11,8 +11,6 @@ The site re-reads them on every build/deploy.
 - `directory.json` — Phone book entries. Grouped by `category`, sorted by
   `sort_order` within each category. Any field except `name` and
   `category` may be `null` or omitted.
-- `events.json` — Calendar events. `type` must be `"operational"` or
-  `"recreational"`. Dates are ISO 8601 (`"2026-07-04T14:00:00Z"`).
 - `emergency-contacts.json` — Tap-to-call list on the Emergency page.
 - `emergency-content.json` — Free-form key/value strings used on the
   Emergency page (`er_name`, `er_address`, `er_lat`, `er_lng`,

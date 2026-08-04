@@ -7,12 +7,13 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { Home, BookUser, Calendar as CalendarIcon, Siren } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/lib/utils";
+import { triggerHaptic } from "@/lib/haptic";
+import { initNative } from "@/lib/native";
 import { initNativePush } from "@/lib/push";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 
@@ -88,6 +89,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Directory, calendar, and emergency info for Aviano Air Base." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Aviano Air Base" },
+      { name: "twitter:description", content: "Directory, calendar, and emergency info for Aviano Air Base." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3c7f6c8-c690-4b6c-9425-116729782eed/id-preview-646a9ce9--c7fd6563-218d-441d-8527-5ac85009ac1b.lovable.app-1782391454840.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3c7f6c8-c690-4b6c-9425-116729782eed/id-preview-646a9ce9--c7fd6563-218d-441d-8527-5ac85009ac1b.lovable.app-1782391454840.png" },
     ],
     links: [
       {
@@ -124,6 +129,8 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
+    initNative();
+
     // Native apps (iOS/Android): register for push via FCM/APNs and store
     // the device token. Browsers: keep the old web-push service worker.
     if (Capacitor.isNativePlatform()) {
@@ -136,7 +143,7 @@ function RootComponent() {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
       }
     }
-  }, [queryClient, router]);
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -148,10 +155,10 @@ function RootComponent() {
 
 function AppShell() {
   return (
-    // Bottom padding must reserve the nav's real height: its content (~5rem)
-    // PLUS the device's safe-area inset, which the nav also adds — otherwise
-    // the last rows of content hide behind it.
-    <div className="min-h-screen bg-background text-foreground flex flex-col pb-[calc(5rem+env(safe-area-inset-bottom))]">
+    // Bottom padding must reserve the floating nav's real height: the pill
+    // (~5rem) PLUS the 16px gap and the device's safe-area inset that the nav
+    // adds below it — otherwise the last rows of content hide behind it.
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-[calc(6rem+env(safe-area-inset-bottom))]">
       <main className="flex-1">
         <Outlet />
       </main>
@@ -169,30 +176,28 @@ function BottomNav() {
   ];
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-40 bg-card/95 backdrop-blur border-t border-border"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed bottom-0 inset-x-0 z-40 flex justify-center px-4"
+      style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 16px)" }}
     >
-      <ul className="grid grid-cols-4 max-w-xl mx-auto">
+      <div className="w-full max-w-sm bg-card/80 backdrop-blur-2xl border border-border/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] rounded-[32px] px-2 py-2 flex items-center justify-between">
         {items.map(({ to, label, Icon, danger }) => (
-          <li key={to} className="px-1">
-            <Link
-              to={to}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 py-2.5 text-xs rounded-lg transition-colors",
-                "text-muted-foreground",
-                danger
-                  ? "data-[status=active]:bg-destructive data-[status=active]:text-white"
-                  : "data-[status=active]:bg-primary data-[status=active]:text-white",
-                "data-[status=active]:shadow"
-              )}
-              activeOptions={{ exact: to === "/" }}
-            >
-              <Icon className="size-5" />
-              <span>{label}</span>
-            </Link>
-          </li>
+          <Link
+            key={to}
+            to={to}
+            onClick={() => triggerHaptic(10)}
+            className="relative flex flex-col items-center justify-center w-1/4 py-2 rounded-[24px] text-muted-foreground transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+            activeProps={{
+              className: danger
+                ? "bg-destructive text-white shadow-md shadow-destructive/20"
+                : "bg-primary text-white shadow-md shadow-primary/20",
+            }}
+            activeOptions={{ exact: to === "/" }}
+          >
+            <Icon className="size-5 mb-0.5" />
+            <span className="text-[10px] font-semibold">{label}</span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </nav>
   );
 }

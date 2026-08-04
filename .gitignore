@@ -13,6 +13,14 @@ dist-ssr
 .output
 .vinxi
 .tanstack/**
+
+# AI assistant / editor tooling settings (machine-local, not app code)
+.claude/
+
+# Raw export folders dropped in from Lovable. Merge them into the app, then
+# delete or archive them OUTSIDE the repo — never commit a second copy of the
+# whole project. See MAINTAINER_GUIDE.md §10.
+App Changes/
 .nitro
 *.local
 

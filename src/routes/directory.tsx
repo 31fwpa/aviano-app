@@ -31,6 +31,14 @@ function parseHours(raw: string): Array<{ day: string; times: string }> | null {
   return DAY_ORDER.filter((d) => byDay.has(d)).map((d) => ({ day: DAY_SHORT[d], times: byDay.get(d)!.join(" ") }));
 }
 
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[\u2018\u2019\u02BC\u201B]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014\u2212]/g, "-");
+}
+
 export const Route = createFileRoute("/directory")({
   head: () => ({ meta: [{ title: "Directory — Aviano AB" }] }),
   component: DirectoryPage,
@@ -50,12 +58,12 @@ function DirectoryPage() {
     [entries],
   );
   const filtered = useMemo(() => {
-    const s = q.toLowerCase().trim();
+    const s = normalize(q).trim();
     return entries.filter((e) => {
       if (category !== "all" && e.category !== category) return false;
       if (!s) return true;
       return [e.name, e.category, e.phone, e.email, e.location, e.notes, e.url].some(
-        (v) => v?.toLowerCase().includes(s),
+        (v) => (v ? normalize(v).includes(s) : false),
       );
     });
   }, [entries, q, category]);

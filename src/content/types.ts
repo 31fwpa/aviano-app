@@ -19,16 +19,6 @@ export type DirectoryEntry = {
   url: string | null;
 };
 
-export type EventItem = {
-  id: string;
-  title: string;
-  type: "operational" | "recreational";
-  starts_at: string;
-  ends_at: string | null;
-  location: string | null;
-  description: string | null;
-};
-
 export type EmergencyContact = {
   id: string;
   label: string;
