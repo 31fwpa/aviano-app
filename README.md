@@ -25,6 +25,7 @@ the guide that matches what you need right now:
 | Change screens, text, links, or styling | [`EDITING_THE_APP.md`](EDITING_THE_APP.md) |
 | Fix something that broke | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
 | Finish setting up / send push notifications | [`PUSH_NOTIFICATIONS.md`](PUSH_NOTIFICATIONS.md) |
+| Put the app on real phones for testing | [`TEST_DEVICE_INSTALL.md`](TEST_DEVICE_INSTALL.md) |
 | Know the Git workflow, decisions, and app-store roadmap | [`MAINTAINER_GUIDE.md`](MAINTAINER_GUIDE.md) |
 
 ## 🗺️ Project status (2026-07-07)
