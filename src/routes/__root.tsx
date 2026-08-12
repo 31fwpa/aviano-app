@@ -11,7 +11,7 @@ import { Home, BookUser, Calendar as CalendarIcon, Siren } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Toaster } from "@/components/ui/sonner";
 import { triggerHaptic } from "@/lib/haptic";
-import { initNative } from "@/lib/native";
+import { initNative, hideSplashWhenReady } from "@/lib/native";
 import { initNativePush } from "@/lib/push";
 import { useEffect } from "react";
 
@@ -130,6 +130,7 @@ function RootComponent() {
 
   useEffect(() => {
     initNative();
+    hideSplashWhenReady();
 
     // Native apps (iOS/Android): register for push via FCM/APNs and store
     // the device token. Browsers: keep the old web-push service worker.

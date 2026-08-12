@@ -132,5 +132,11 @@ log in `MAINTAINER_GUIDE.md`.
   `MAINTAINER_GUIDE.md` §10.
 - **External links open in an in-app browser** (`src/lib/native.ts`) so
   people aren't stranded outside the app with no way back.
+- **The launch splash is dismissed by the app, not by a timer.** It holds
+  until the first screen has painted (`hideSplashWhenReady` in
+  `src/lib/native.ts`), which removes the blank flash a timed splash leaves
+  behind. A 5-second failsafe hides it even if rendering stalls, so the app
+  can never appear frozen. The artwork is regenerated with the app icons —
+  see the `assets/` row in the folder map above.
 
 _Last updated: 2026-08-04._

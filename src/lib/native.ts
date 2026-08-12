@@ -1,5 +1,38 @@
 import { Capacitor } from "@capacitor/core";
 
+// The splash is configured with launchAutoHide: false, so it stays up until we
+// dismiss it. If dismissal never ran the app would look frozen, so every path
+// below is guarded and a failsafe timer hides it regardless.
+const SPLASH_FAILSAFE_MS = 5000;
+let splashHidden = false;
+
+function hideSplash() {
+  if (splashHidden) return;
+  splashHidden = true;
+  void import("@capacitor/splash-screen")
+    .then(({ SplashScreen }) => SplashScreen.hide({ fadeOutDuration: 200 }))
+    .catch(() => {});
+}
+
+/**
+ * Dismiss the launch splash once the first screen has actually been painted.
+ *
+ * Two animation frames are awaited deliberately: the first fires before the
+ * browser paints, the second after — so the splash hands off to real content
+ * instead of the blank frame that made a flash visible before.
+ *
+ * Safe to call on web — it no-ops.
+ */
+export function hideSplashWhenReady() {
+  if (typeof window === "undefined") return;
+  if (!Capacitor.isNativePlatform()) return;
+
+  // Failsafe: never leave the splash up, even if rendering stalls.
+  window.setTimeout(hideSplash, SPLASH_FAILSAFE_MS);
+
+  requestAnimationFrame(() => requestAnimationFrame(hideSplash));
+}
+
 /**
  * Initialize native-only behavior when running inside Capacitor.
  * Safe to call on web — it no-ops.
