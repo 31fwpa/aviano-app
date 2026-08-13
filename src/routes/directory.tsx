@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import directoryData from "@/content/directory.json";
 import type { DirectoryEntry } from "@/content/types";
+import { parsePhones } from "@/lib/phone";
 
 const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 const DAY_SHORT: Record<string, string> = { Mon: "M", Tue: "T", Wed: "W", Thu: "Th", Fri: "F", Sat: "Sa", Sun: "Su" };
@@ -106,11 +107,19 @@ function DirectoryPage() {
                         <ExternalLink className="size-4" /> More info
                       </a>
                     )}
-                    {e.phone && (
-                      <a href={`tel:${e.phone}`} className="flex items-center gap-2 text-primary">
-                        <Phone className="size-4" /> {e.phone}
+                    {parsePhones(e.phone).map((p, i) => (
+                      <a
+                        key={`${e.id}-phone-${i}`}
+                        href={`tel:${p.dial}`}
+                        className="flex items-center gap-2 text-primary"
+                      >
+                        <Phone className="size-4 shrink-0" />
+                        <span>
+                          {p.label && <span className="text-muted-foreground">{p.label}: </span>}
+                          {p.display}
+                        </span>
                       </a>
-                    )}
+                    ))}
                     {e.email && (
                       <a href={`mailto:${e.email}`} className="flex items-center gap-2 text-primary">
                         <Mail className="size-4" /> {e.email}
