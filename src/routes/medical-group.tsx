@@ -58,10 +58,10 @@ const generalInfo: LinkItem[] = [
   },
   {
     label: "HIPAA Notice of Privacy Practices",
-    href: resolveDocument("MHSNoticeofPrivacyPractices16February2026.pdf"),
+    href: resolveDocument("HIPAA Notice of Privacy Practices.pdf"),
   },
   { label: "31 MDG Tricare Website", href: "https://aviano.tricare.mil/" },
-  { label: "MyCare Overseas", href: resolveDocument("MyCareOverseasFactsheetAugust2024.pdf") },
+  { label: "MyCare Overseas", href: resolveDocument("MyCare Overseas.pdf") },
 ];
 
 const emergencyUrgentCare: LinkItem[] = [
@@ -101,11 +101,11 @@ const mentalHealth: LinkItem[] = [
 
 const ancillaryServices: LinkItem[] = [
   { label: "Laboratory", href: resolveDocument("AFConnectLab.jpg") },
-  { label: "Radiology", href: resolveDocument("AFConnectRadiology.pdf") },
+  { label: "Radiology", href: resolveDocument("Radiology.pdf") },
   { label: "EFMP", href: resolveDocument("AFConnectSlideEFMP.jpg") },
-  { label: "Medical Records", href: resolveDocument("RequestingMedicalRecords.pdf") },
-  { label: "Patient Travel Office", href: resolveDocument("PatientTravelPTinfo.pdf") },
-  { label: "Referral Management", href: resolveDocument("RMCPatientInformation.pdf") },
+  { label: "Medical Records", href: resolveDocument("Medical Records.pdf") },
+  { label: "Patient Travel Office", href: resolveDocument("Patient Travel Office.pdf") },
+  { label: "Referral Management", href: resolveDocument("Referral Management.pdf") },
 ];
 
 const pharmacy: LinkItem[] = [

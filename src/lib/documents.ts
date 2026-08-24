@@ -1,19 +1,42 @@
 import documents from "@/content/documents.json";
+import bundled from "@/content/bundled-documents.json";
 
 /**
- * Resolve a document (PDF, flyer, or slide) filename to its published URL.
+ * Resolve a document (PDF, flyer, or slide) to something the UI can link to.
  *
- * These files are NOT bundled in the app — they are published on the base
- * website, and `src/content/documents.json` maps each filename to its web
- * address. Adding a document is therefore a content edit, not a code change:
- * upload the file, then paste its URL next to the filename in that JSON file.
- * See CONTENT_EDITING_GUIDE.md.
+ * Two kinds of document exist:
  *
- * Returns `undefined` while a document has no URL yet, which makes the LRS and
- * Medical Group pages show their built-in "Coming soon" / "not yet available"
- * state instead of a dead link.
+ * 1. **Bundled** — the file ships inside the app (`public/documents/`) and is
+ *    listed in `bundled-documents.json`. These open in the in-app viewer and
+ *    work with no signal at all, which is the point: someone who has just
+ *    arrived at Aviano may have no Italian SIM and no wifi, and PCS paperwork
+ *    is exactly what they need. Bundled always wins for that reason.
+ * 2. **Linked** — published on a website and listed in `documents.json`.
+ *    Used for anything not bundled. Needs internet.
+ *
+ * Returns `undefined` when a document is neither bundled nor published yet,
+ * which makes the pages show their "Coming soon" state instead of a dead link.
  */
 export function resolveDocument(filename: string): string | undefined {
+  const slug = (bundled as Record<string, string>)[filename];
+  if (slug) return `${IN_APP_PREFIX}${encodeURIComponent(slug)}`;
+
   const url = (documents as Record<string, string>)[filename];
-  return url && url.trim() ? url : undefined;
+  return url && url.trim() ? url.trim() : undefined;
+}
+
+const IN_APP_PREFIX = "/document?doc=";
+
+/**
+ * True when resolveDocument returned an in-app viewer route rather than an
+ * external website. Callers use this to pick a router <Link> (stays inside the
+ * app) over an <a target="_blank"> (leaves for the in-app browser).
+ */
+export function isInAppDocument(href: string): boolean {
+  return href.startsWith(IN_APP_PREFIX);
+}
+
+/** The bundled file's URL, e.g. for the viewer to fetch. */
+export function documentFileUrl(slug: string): string {
+  return `/documents/${slug}`;
 }

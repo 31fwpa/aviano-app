@@ -43,3 +43,6 @@ App Changes/
 # Source PDFs/flyers awaiting upload to the base website. They are LINKED, not
 # bundled (MAINTAINER_GUIDE.md §10) — keep these ~28MB out of the repo.
 downloads/
+
+# Local APK hand-out folder (build artifact, never commit)
+apk-share/

@@ -72,11 +72,11 @@ const sections: Section[] = [
         title: "Required Documents",
         items: [
           { label: "Wine / Alcohol / Motorcycle", pdf: "WineRequiredDocumentsCombined_1681991284.pdf" },
-          { label: "Customs & Agriculture", pdf: "CustomsFormsCombined_1678974038.pdf" },
-          { label: "Personally Procured Move (PPM)", pdf: "PPMDocumentsCombined_1678972679.pdf" },
-          { label: "Household Goods (HHG)", pdf: "HHGcombined_1679325973.pdf" },
-          { label: "Unaccompanied Baggage (UB)", pdf: "UnaccompaniedBaggage.pdf" },
-          { label: "Date Change Request", pdf: "DateChangeRequest_1681455424.pdf" },
+          { label: "Customs & Agriculture", pdf: "Customs & Agriculture.pdf" },
+          { label: "Personally Procured Move (PPM)", pdf: "Personally Procured Move (PPM).pdf" },
+          { label: "Household Goods (HHG)", pdf: "Household Goods (HHG).pdf" },
+          { label: "Unaccompanied Baggage (UB)", pdf: "Unaccompanied Baggage (UB).pdf" },
+          { label: "Date Change Request", pdf: "Date Change Request.pdf" },
           {
             label: "Stateside Authorizations for Alcohol",
             href: "https://www.ttb.gov/wine/alcohol-beverage-control-boards",
@@ -86,24 +86,24 @@ const sections: Section[] = [
       {
         title: "Claims",
         items: [
-          { label: "Inconvenience Claims", pdf: "InconvenienceClaimFactSheet_1680685144.pdf" },
-          { label: "Loss & Damage Claims", pdf: "LossDamageClaimsFactSheet_1680686279.pdf" },
-          { label: "POV Inconvenience Claims", pdf: "POVinconvenienceclaim_1680685405.pdf" },
+          { label: "Inconvenience Claims", pdf: "Inconvenience Claims.pdf" },
+          { label: "Loss & Damage Claims", pdf: "Loss & Damage Claims.pdf" },
+          { label: "POV Inconvenience Claims", pdf: "POV Inconvenience Claims.pdf" },
         ],
       },
       {
         title: "Weight Allowances",
         items: [
-          { label: "PCS and NTS Weight Allowance", pdf: "PCSandNTSWeightAllowances_1679488578.pdf" },
+          { label: "PCS and NTS Weight Allowance", pdf: "PCS and NTS Weight Allowance.pdf" },
           {
             label: "Unaccompanied Baggage Weight Allowance",
-            pdf: "UnaccompaniedBaggageWeightAllowances_1679488678.pdf",
+            pdf: "Unaccompanied Baggage Weight Allowance.pdf",
           },
           {
             label: "Exceptions to HHG Weight Allowances",
-            pdf: "ExceptiontoHHGWeightAllowanceforSingleorUnaccompaniedTour_1679488678.pdf",
+            pdf: "Exceptions to HHG Weight Allowances.pdf",
           },
-          { label: "TDY Weight Allowances", pdf: "TDYWeightAllowances_1679573673.pdf" },
+          { label: "TDY Weight Allowances", pdf: "TDY Weight Allowances.pdf" },
         ],
       },
     ],
@@ -124,7 +124,7 @@ const sections: Section[] = [
           { label: "Circuitous Travel Memo", pdf: "CircuitousTravelMemo_1682603951.pdf" },
           {
             label: "Travel Authorization (JTR & AFI 24-602v1)",
-            pdf: "CircuitousTravelExcerpts_1682603951.pdf",
+            pdf: "Travel Authorization (JTR & AFI 24-602v1).pdf",
           },
         ],
       },
@@ -139,33 +139,33 @@ const sections: Section[] = [
             label: "During Tour — Use DTS",
             href: "https://dtsproweb.defensetravel.osd.mil/dts-app/pubsite/all/view",
           },
-          { label: "Travel Authorizations (JTR)", pdf: "COTTravelAuthorizations_1680169987.pdf" },
+          { label: "Travel Authorizations (JTR)", pdf: "Travel Authorizations (JTR) (COT Travel).pdf" },
         ],
       },
       {
         title: "Emergency Leave",
         items: [
-          { label: "Emergency Leave Process", pdf: "EmergencyLeaveProcess_1701794317.pdf" },
-          { label: "AF Form 972, Emergency Leave Order", pdf: "AF972EmergencyLeaveOrder_1680008003.pdf" },
-          { label: "Port Call Request Form", pdf: "PortCallRequest_1680007834.pdf" },
-          { label: "Travel Authorizations (JTR)", pdf: "EmergencyLeaveJTRExcerpt_1680170388.pdf" },
+          { label: "Emergency Leave Process", pdf: "Emergency Leave Process.pdf" },
+          { label: "AF Form 972, Emergency Leave Order", pdf: "AF Form 972, Emergency Leave Order.pdf" },
+          { label: "Port Call Request Form", pdf: "Port Call Request Form.pdf" },
+          { label: "Travel Authorizations (JTR)", pdf: "Travel Authorizations (JTR) (Emergency Leave).pdf" },
         ],
       },
       {
         title: "Leave-in-Conjunction with TDY",
         items: [
-          { label: "Leave-in-Conjunction with TDY Process", pdf: "LICWOTProcess_1682603127.pdf" },
+          { label: "Leave-in-Conjunction with TDY Process", pdf: "Leave-in-Conjunction with TDY Process.pdf" },
           {
             label: "Leave-in-Conjunction with TDY Memo",
             pdf: "LeaveinConjunctionwithTDYSelfProcuringTransoceanic_1682603127.pdf",
           },
-          { label: "Travel Authorizations (JTR)", pdf: "LeaveinConjunctionJTRExcerpt_1680169470.pdf" },
+          { label: "Travel Authorizations (JTR)", pdf: "Travel Authorizations (JTR) (Leave-in-Conjunction).pdf" },
         ],
       },
       {
         title: "PCS / SEP / RET Travel",
         items: [
-          { label: "Travel Request Process", pdf: "APRT_1679062320.pdf" },
+          { label: "Travel Request Process", pdf: "Travel Request Process.pdf" },
           {
             label: "Submit Port Call (CAC required)",
             href: "https://usaf.dps.mil/teams/13569/TrafficMGT/PassengerTravelAccessPoint/Site_Pages/Home.aspx",
@@ -175,8 +175,8 @@ const sections: Section[] = [
       {
         title: "Pet Travel",
         items: [
-          { label: "IATA Pet Container Requirements", pdf: "IATApetcontainerrequirements_1684475054.pdf" },
-          { label: "Pet Expense Reimbursement (1 Jan 24)", pdf: "PetExpenseReimbursement_1688624292.pdf" },
+          { label: "IATA Pet Container Requirements", pdf: "IATA Pet Container Requirements.pdf" },
+          { label: "Pet Expense Reimbursement (1 Jan 24)", pdf: "Pet Expense Reimbursement (1 Jan 24).pdf" },
           {
             label: "DTMO Guidance for Pet Travel Expense",
             href: "https://www.travel.dod.mil/Support/ALL-FAQs/Article/3624131/pet-transportation-allowance/",
@@ -189,14 +189,14 @@ const sections: Section[] = [
             label: "Lufthansa Policy for Fighting & Snub Nose Breeds",
             href: "https://www.lufthansa.com/br/en/dangerous-dogs",
           },
-          { label: "AMC Pet Pamphlet", pdf: "AMCPetPamphlet01Nov2023.pdf" },
-          { label: "AMC Non-Availability Letter", pdf: "AvianoPetNonALetterCAO10June.pdf" },
-          { label: "Pet Travel Guidance (1 Aug 24)", pdf: "PETTRAVELGUIDANCE.pdf" },
-          { label: "CDC Entry Requirements", pdf: "CDCENTRYREQUIREMENTSCHART.pdf" },
-          { label: "CDC Regulation Update", pdf: "CDCupdatetodogsandcatregulation.pdf" },
-          { label: "Importer Info — Air Entry", pdf: "Importerinfosheetairentry.pdf" },
-          { label: "Importer Info — Land Entry", pdf: "Importerinfosheetlandentry.pdf" },
-          { label: "Importer Info — Sea Entry", pdf: "Importerinfosheetseaentry.pdf" },
+          { label: "AMC Pet Pamphlet", pdf: "AMC Pet Pamphlet.pdf" },
+          { label: "AMC Non-Availability Letter", pdf: "AMC Non-Availability Letter.pdf" },
+          { label: "Pet Travel Guidance (1 Aug 24)", pdf: "Pet Travel Guidance -1 Aug 24-.pdf" },
+          { label: "CDC Entry Requirements", pdf: "CDC Entry Requirements.pdf" },
+          { label: "CDC Regulation Update", pdf: "CDC Regulation Update.pdf" },
+          { label: "Importer Info — Air Entry", pdf: "Importer Info_Air Entry.pdf" },
+          { label: "Importer Info — Land Entry", pdf: "Importer Info_Land Entry.pdf" },
+          { label: "Importer Info — Sea Entry", pdf: "Importer Info_Sea Entry.pdf" },
         ],
       },
       {
@@ -213,26 +213,26 @@ const sections: Section[] = [
         items: [
           {
             label: "Self Procurement Policy",
-            pdf: "1.MFR31FWSelfProcuredTravelEligibilityv2_1701794551.pdf",
+            pdf: "Self Procurement Policy.pdf",
           },
-          { label: "JTR Reference Para 020207-G", pdf: "JTRpara020207G_1701795071.pdf" },
+          { label: "JTR Reference Para 020207-G", pdf: "JTR Reference Para 020207-G.pdf" },
         ],
       },
       {
         title: "Memo Templates",
         items: [
-          { label: "CBA Request Memo", pdf: "CBARequestMemo.pdf" },
+          { label: "CBA Request Memo", pdf: "CBA Request Memo.pdf" },
           { label: "Circuitous Travel Memo", pdf: "CircuitousTravelMemo_1680009961.pdf" },
           {
             label: "Leave-in-Conjunction with TDY Memo",
             pdf: "LeaveinConjunctionwithTDYSelfProcuringTransoceanic_1680010626.pdf",
           },
-          { label: "Verbal Order (VOCO)", pdf: "VerbalOrdersVOCO.pdf" },
+          { label: "Verbal Order (VOCO)", pdf: "Verbal Order (VOCO).pdf" },
           {
             label: "Port Call (MDG, GSUs, TDY, E-Leave use only)",
-            pdf: "PortCallRequest_1681802624.pdf",
+            pdf: "Port Call (MDG, GSUs, TDY, E-Leave use only).pdf",
           },
-          { label: "Pet AMC Non-Availability Memo", pdf: "AvianoPetNonALetterCAO10June.pdf" },
+          { label: "Pet AMC Non-Availability Memo", pdf: "AMC Non-Availability Letter.pdf" },
         ],
       },
     ],
@@ -246,8 +246,8 @@ const sections: Section[] = [
         title: "Mobility Customer Pin",
         items: [
           { label: "ILS-S link (CAC enabled)", href: "https://ils-s.cce.af.mil/ilss/" },
-          { label: "Set up (Non-ILS-S users)", pdf: "MobilityCustomerPinNonILSSusers_1691577200.pdf" },
-          { label: "Set up (ILS-S users)", pdf: "MobilityCustomerPinILSSusers_1691577200.pdf" },
+          { label: "Set up (Non-ILS-S users)", pdf: "Set up (Non-ILS-S users).pdf" },
+          { label: "Set up (ILS-S users)", pdf: "Set up (ILS-S users).pdf" },
         ],
       },
       {
