@@ -34,12 +34,42 @@ function CalendarPage() {
     return (result?.events ?? []).filter((e) => e.start.slice(0, 10) >= today);
   }, [result]);
 
-  // Venue-style categories make the most useful filter; FSS tags each event
-  // with both a type ("Food") and a location ("La Bella Vista Club").
+  // FSS tags each event with both a type ("Food") and a venue ("La Bella
+  // Vista Club"). Those two often cover *exactly* the same events, which would
+  // show two chips that filter identically. Collapse any such pair, keeping
+  // the venue — it matches the events' location, so it tells you something the
+  // other doesn't.
   const categories = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const e of upcoming) for (const c of e.categories) counts.set(c, (counts.get(c) ?? 0) + 1);
-    return [...counts.entries()]
+    const members = new Map<string, Set<string>>();
+    for (const e of upcoming) {
+      for (const c of e.categories) {
+        if (!members.has(c)) members.set(c, new Set());
+        members.get(c)!.add(e.uid);
+      }
+    }
+
+    const signature = (uids: Set<string>) => [...uids].sort().join("|");
+    const bySignature = new Map<string, string[]>();
+    for (const [name, uids] of members) {
+      const key = signature(uids);
+      bySignature.set(key, [...(bySignature.get(key) ?? []), name]);
+    }
+
+    const kept: Array<[string, number]> = [];
+    for (const names of bySignature.values()) {
+      const winner =
+        names.length === 1
+          ? names[0]
+          : // Prefer the category that names where the events actually are.
+            (names.find((n) =>
+              upcoming.some((e) => e.categories.includes(n) && e.location === n),
+            ) ??
+            // Otherwise the most specific-looking name, so the choice is stable.
+            [...names].sort((a, b) => b.length - a.length)[0]);
+      kept.push([winner, members.get(winner)!.size]);
+    }
+
+    return kept
       .filter(([, n]) => n >= 2)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6)
