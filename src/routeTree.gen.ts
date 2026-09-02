@@ -13,6 +13,7 @@ import { Route as SoggiornoRouteImport } from './routes/soggiorno'
 import { Route as SecurityForcesRouteImport } from './routes/security-forces'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as ReportHubRouteImport } from './routes/report-hub'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PaRouteImport } from './routes/pa'
 import { Route as MfrcRouteImport } from './routes/mfrc'
 import { Route as MedicalGroupRouteImport } from './routes/medical-group'
@@ -45,6 +46,11 @@ const SafetyRoute = SafetyRouteImport.update({
 const ReportHubRoute = ReportHubRouteImport.update({
   id: '/report-hub',
   path: '/report-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaRoute = PaRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/medical-group': typeof MedicalGroupRoute
   '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
+  '/privacy': typeof PrivacyRoute
   '/report-hub': typeof ReportHubRoute
   '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/medical-group': typeof MedicalGroupRoute
   '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
+  '/privacy': typeof PrivacyRoute
   '/report-hub': typeof ReportHubRoute
   '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/medical-group': typeof MedicalGroupRoute
   '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
+  '/privacy': typeof PrivacyRoute
   '/report-hub': typeof ReportHubRoute
   '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/medical-group'
     | '/mfrc'
     | '/pa'
+    | '/privacy'
     | '/report-hub'
     | '/safety'
     | '/security-forces'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/medical-group'
     | '/mfrc'
     | '/pa'
+    | '/privacy'
     | '/report-hub'
     | '/safety'
     | '/security-forces'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/medical-group'
     | '/mfrc'
     | '/pa'
+    | '/privacy'
     | '/report-hub'
     | '/safety'
     | '/security-forces'
@@ -245,6 +257,7 @@ export interface RootRouteChildren {
   MedicalGroupRoute: typeof MedicalGroupRoute
   MfrcRoute: typeof MfrcRoute
   PaRoute: typeof PaRoute
+  PrivacyRoute: typeof PrivacyRoute
   ReportHubRoute: typeof ReportHubRoute
   SafetyRoute: typeof SafetyRoute
   SecurityForcesRoute: typeof SecurityForcesRoute
@@ -279,6 +292,13 @@ declare module '@tanstack/react-router' {
       path: '/report-hub'
       fullPath: '/report-hub'
       preLoaderRoute: typeof ReportHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pa': {
@@ -389,6 +409,7 @@ const rootRouteChildren: RootRouteChildren = {
   MedicalGroupRoute: MedicalGroupRoute,
   MfrcRoute: MfrcRoute,
   PaRoute: PaRoute,
+  PrivacyRoute: PrivacyRoute,
   ReportHubRoute: ReportHubRoute,
   SafetyRoute: SafetyRoute,
   SecurityForcesRoute: SecurityForcesRoute,

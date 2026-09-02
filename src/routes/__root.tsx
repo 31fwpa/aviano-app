@@ -91,8 +91,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "Aviano Air Base" },
       { name: "twitter:description", content: "Directory, calendar, and emergency info for Aviano Air Base." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3c7f6c8-c690-4b6c-9425-116729782eed/id-preview-646a9ce9--c7fd6563-218d-441d-8527-5ac85009ac1b.lovable.app-1782391454840.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f3c7f6c8-c690-4b6c-9425-116729782eed/id-preview-646a9ce9--c7fd6563-218d-441d-8527-5ac85009ac1b.lovable.app-1782391454840.png" },
+      // Social preview images point at the app's own bundled icon. They used
+      // to reference a screenshot on Lovable's CDN — a third-party URL we
+      // don't control, which would rot and looks wrong in a store submission.
+      { property: "og:image", content: "/icon-512.png" },
+      { name: "twitter:image", content: "/icon-512.png" },
     ],
     links: [
       {

@@ -23,7 +23,7 @@ const MFRC = {
   phoneDisplay: "0434 30 5407",
   phoneDial: "0434305407",
   email: "31fss.fsfr.1@us.af.mil",
-  website: "http://31fss.com/military-family-readiness-center",
+  website: "https://31fss.com/military-family-readiness-center",
 };
 
 // The MFLCs are a separate, confidential service — worth surfacing here

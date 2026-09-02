@@ -131,14 +131,11 @@ const sections: Section[] = [
       {
         title: "COT Travel",
         items: [
-          {
-            label: "Enroute PCS — Submit Port Call",
-            href: "https://usaf.dps.mil/teams/13569/TrafficMGT/PassengerTravelAccessPoint/Site_Pages/Home.aspx",
-          },
-          {
-            label: "During Tour — Use DTS",
-            href: "https://dtsproweb.defensetravel.osd.mil/dts-app/pubsite/all/view",
-          },
+          // Port call SharePoint removed — CAC-locked, confirmed on device.
+          // Passenger Travel (in the Directory) submits these by phone.
+          // DTS link removed: tested on device, it fails from Aviano on both
+          // base wifi (hangs) and cellular (ERR_CONNECTION_RESET). Use DTS
+          // from a government computer.
           { label: "Travel Authorizations (JTR)", pdf: "Travel Authorizations (JTR) (COT Travel).pdf" },
         ],
       },
@@ -166,10 +163,8 @@ const sections: Section[] = [
         title: "PCS / SEP / RET Travel",
         items: [
           { label: "Travel Request Process", pdf: "Travel Request Process.pdf" },
-          {
-            label: "Submit Port Call (CAC required)",
-            href: "https://usaf.dps.mil/teams/13569/TrafficMGT/PassengerTravelAccessPoint/Site_Pages/Home.aspx",
-          },
+          // Port call SharePoint removed — CAC-locked, confirmed on device.
+          // Passenger Travel (in the Directory) submits these by phone.
         ],
       },
       {
@@ -202,10 +197,9 @@ const sections: Section[] = [
       {
         title: "TDY / Deployment Travel",
         items: [
-          {
-            label: "DTS Login Page",
-            href: "https://dtsproweb.defensetravel.osd.mil/dts-app/pubsite/all/view",
-          },
+          // DTS link removed: tested on device, it fails from Aviano on both
+          // base wifi (hangs) and cellular (ERR_CONNECTION_RESET). Use DTS
+          // from a government computer.
         ],
       },
       {
@@ -245,7 +239,9 @@ const sections: Section[] = [
       {
         title: "Mobility Customer Pin",
         items: [
-          { label: "ILS-S link (CAC enabled)", href: "https://ils-s.cce.af.mil/ilss/" },
+          // Removed after on-device testing: ils-s.cce.af.mil presents a
+          // certificate error on consumer phones (DoD root CA is not in their
+          // trust store), so the link offers users a "proceed (unsafe)" warning.
           { label: "Set up (Non-ILS-S users)", pdf: "Set up (Non-ILS-S users).pdf" },
           { label: "Set up (ILS-S users)", pdf: "Set up (ILS-S users).pdf" },
         ],

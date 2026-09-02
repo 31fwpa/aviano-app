@@ -27,6 +27,7 @@ the guide that matches what you need right now:
 | Finish setting up / send push notifications | [`PUSH_NOTIFICATIONS.md`](PUSH_NOTIFICATIONS.md) |
 | Put the app on real phones for testing | [`TEST_DEVICE_INSTALL.md`](TEST_DEVICE_INSTALL.md) |
 | Publish the LRS/MDG documents to the base website | [`PDF_UPLOAD_PLAN.md`](PDF_UPLOAD_PLAN.md) |
+| Submit to the App Store / Google Play | [`STORE_SUBMISSION.md`](STORE_SUBMISSION.md) |
 | Know the Git workflow, decisions, and app-store roadmap | [`MAINTAINER_GUIDE.md`](MAINTAINER_GUIDE.md) |
 
 ## 🗺️ Project status (2026-07-07)

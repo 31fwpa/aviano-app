@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle, Users, FileText, Ticket, HardHat, Radio, BookOpen } from "lucide-react";
+import { ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle, Users, FileText, Ticket, HardHat, Radio, BookOpen, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -101,6 +101,11 @@ function Index() {
           <QuickLink to="/afn" icon={<Radio className="size-5" />} label="AFN" />
           <QuickLink to="/epubs" icon={<BookOpen className="size-5" />} label="E-Pubs" />
         </div>
+        <Button asChild variant="ghost" size="sm" className="w-full text-muted-foreground">
+          <Link to="/privacy">
+            <ShieldCheck className="size-4" /> Privacy
+          </Link>
+        </Button>
         <Button asChild variant="outline" className="w-full">
           <a href="https://31fss.com/first-31-pcs-start/" target="_blank" rel="noopener noreferrer"><ExternalLink className="size-4" /> Newcomers</a>
         </Button>
