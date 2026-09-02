@@ -8,6 +8,9 @@ export const Route = createFileRoute("/document")({
   head: () => ({ meta: [{ title: "Document — Aviano AB" }] }),
   validateSearch: (search: Record<string, unknown>) => ({
     doc: typeof search.doc === "string" ? search.doc : "",
+    // The linking page knows the human name ("General Pharmacy Information");
+    // without it the header can only show the filename.
+    title: typeof search.title === "string" ? search.title : undefined,
   }),
   component: DocumentPage,
 });
@@ -22,12 +25,19 @@ export const Route = createFileRoute("/document")({
  * bundled is to work with no connectivity.
  */
 function DocumentPage() {
-  const { doc } = Route.useSearch();
+  const { doc, title: passedTitle } = Route.useSearch();
   const containerRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [pageCount, setPageCount] = useState(0);
 
-  const title = doc ? decodeURIComponent(doc).replace(/-/g, " ").replace(/\.pdf$/i, "") : "Document";
+  const title =
+    passedTitle ??
+    (doc
+      ? decodeURIComponent(doc)
+          .replace(/-/g, " ")
+          .replace(/\.(pdf|jpe?g|png)$/i, "")
+      : "Document");
+  const isImage = /\.(jpe?g|png|gif|webp)$/i.test(doc ? decodeURIComponent(doc) : "");
 
   useEffect(() => {
     if (!doc) {
@@ -37,6 +47,29 @@ function DocumentPage() {
     let cancelled = false;
     let observer: IntersectionObserver | undefined;
     const canvases: HTMLCanvasElement[] = [];
+
+    // A third of these documents are flyers and slides, not PDFs. Those just
+    // need an <img> — running them through pdf.js would only fail.
+    const name = decodeURIComponent(doc);
+    if (/\.(jpe?g|png|gif|webp)$/i.test(name)) {
+      const container = containerRef.current;
+      if (!container) return;
+      container.replaceChildren();
+      const img = new Image();
+      img.src = documentFileUrl(name);
+      img.alt = title;
+      img.className = "w-full h-auto rounded-lg border border-border bg-white shadow-sm";
+      img.onload = () => {
+        if (cancelled) return;
+        container.appendChild(img);
+        setPageCount(1);
+        setStatus("ready");
+      };
+      img.onerror = () => !cancelled && setStatus("error");
+      return () => {
+        cancelled = true;
+      };
+    }
 
     (async () => {
       try {
@@ -140,7 +173,7 @@ function DocumentPage() {
           <p className="font-semibold leading-tight truncate capitalize">{title}</p>
           {status === "ready" && pageCount > 0 && (
             <p className="text-xs opacity-80">
-              {pageCount} page{pageCount === 1 ? "" : "s"} · saved in the app
+              {isImage ? "Saved in the app" : `${pageCount} page${pageCount === 1 ? "" : "s"} · saved in the app`}
             </p>
           )}
         </div>

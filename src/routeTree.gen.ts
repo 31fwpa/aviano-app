@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SecurityForcesRouteImport } from './routes/security-forces'
+import { Route as ReportHubRouteImport } from './routes/report-hub'
 import { Route as PaRouteImport } from './routes/pa'
 import { Route as MedicalGroupRouteImport } from './routes/medical-group'
 import { Route as LrsRouteImport } from './routes/lrs'
@@ -23,6 +24,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SecurityForcesRoute = SecurityForcesRouteImport.update({
   id: '/security-forces',
   path: '/security-forces',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportHubRoute = ReportHubRouteImport.update({
+  id: '/report-hub',
+  path: '/report-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaRoute = PaRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/report-hub': typeof ReportHubRoute
   '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/report-hub': typeof ReportHubRoute
   '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
   '/pa': typeof PaRoute
+  '/report-hub': typeof ReportHubRoute
   '/security-forces': typeof SecurityForcesRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/lrs'
     | '/medical-group'
     | '/pa'
+    | '/report-hub'
     | '/security-forces'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/lrs'
     | '/medical-group'
     | '/pa'
+    | '/report-hub'
     | '/security-forces'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/lrs'
     | '/medical-group'
     | '/pa'
+    | '/report-hub'
     | '/security-forces'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   LrsRoute: typeof LrsRoute
   MedicalGroupRoute: typeof MedicalGroupRoute
   PaRoute: typeof PaRoute
+  ReportHubRoute: typeof ReportHubRoute
   SecurityForcesRoute: typeof SecurityForcesRoute
 }
 
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/security-forces'
       fullPath: '/security-forces'
       preLoaderRoute: typeof SecurityForcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report-hub': {
+      id: '/report-hub'
+      path: '/report-hub'
+      fullPath: '/report-hub'
+      preLoaderRoute: typeof ReportHubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pa': {
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   LrsRoute: LrsRoute,
   MedicalGroupRoute: MedicalGroupRoute,
   PaRoute: PaRoute,
+  ReportHubRoute: ReportHubRoute,
   SecurityForcesRoute: SecurityForcesRoute,
 }
 export const routeTree = rootRouteImport

@@ -185,6 +185,25 @@ function CalendarPage() {
 }
 
 function EventCard({ event }: { event: CalendarEvent }) {
+  // FSS tags events with both a venue and a type. The venue is already shown
+  // on the location line above, so a badge repeating it is noise — drop it and
+  // keep the type, which is the half the card doesn't otherwise say.
+  //
+  // Compared loosely on purpose: FSS writes the same venue differently in the
+  // two fields (category "Arts & Crafts Center" vs location "Arts and Crafts
+  // Center"), which an exact match would miss.
+  const sameName = (a: string, b: string) => {
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]/g, "");
+    return norm(a) === norm(b);
+  };
+  const badges = event.categories
+    .filter((c) => !sameName(c, event.location ?? ""))
+    .slice(0, 2);
+
   const body = (
     <>
       <div className="flex items-start gap-3">
@@ -203,9 +222,9 @@ function EventCard({ event }: { event: CalendarEvent }) {
               <span className="truncate">{event.location}</span>
             </p>
           )}
-          {event.categories.length > 0 && (
+          {badges.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2">
-              {event.categories.slice(0, 2).map((c) => (
+              {badges.map((c) => (
                 <Badge key={c} variant="secondary" className="text-[10px]">
                   {c}
                 </Badge>

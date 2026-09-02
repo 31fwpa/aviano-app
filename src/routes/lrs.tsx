@@ -401,7 +401,7 @@ function ResourceLink({ item }: { item: Resource }) {
   // anything else is a website link and leaves for the in-app browser.
   if (isInAppDocument(url)) {
     return (
-      <Link to="/document" search={{ doc: url.split("doc=")[1] }} className={rowClass}>
+      <Link to="/document" search={{ doc: url.split("doc=")[1], title: item.label }} className={rowClass}>
         <FileText className="size-4 shrink-0 text-primary" />
         <span className="flex-1">{item.label}</span>
       </Link>

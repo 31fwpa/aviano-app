@@ -91,7 +91,7 @@ const specialtyClinics: LinkItem[] = [
 const mentalHealth: LinkItem[] = [
   { label: "Mental Health Clinic", href: resolveDocument("AFConnectMentalHealthClinic.jpg") },
   { label: "Family Advocacy", href: resolveDocument("AFConnectFamilyAdvocacy.jpg") },
-  { label: "ADAPT Program", href: resolveDocument("AFConnectADAPT.jpg") },
+  { label: "ADAPT Program", href: resolveDocument("AFConnectADAPTPROGRAMwledits.jpg") },
   {
     label: "Aviano Mental Health Website Link",
     href: "https://aviano.tricare.mil/Health-Services/Mental-Health",
@@ -163,7 +163,7 @@ function LinkButton({ item, icon: Icon, iconClass }: { item: LinkItem; icon: Rea
   if (href && isInAppDocument(href)) {
     return (
       <Button variant="outline" className={buttonClass} asChild>
-        <Link to="/document" search={{ doc: href.split("doc=")[1] }}>
+        <Link to="/document" search={{ doc: href.split("doc=")[1], title: item.label }}>
           {inner}
         </Link>
       </Button>

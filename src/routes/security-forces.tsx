@@ -93,7 +93,7 @@ function QuickLinksSection() {
                   asChild
                 >
                   {/* Bundled document — opens in the in-app viewer, works offline */}
-                  <Link to="/document" search={{ doc: href.split("doc=")[1] }}>
+                  <Link to="/document" search={{ doc: href.split("doc=")[1], title: label }}>
                     <Icon className="size-4 text-primary shrink-0" />
                     <span className="break-words">{label}</span>
                   </Link>

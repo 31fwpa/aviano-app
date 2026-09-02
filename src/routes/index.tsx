@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Phone, MapPin, ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle } from "lucide-react";
+import { Phone, MapPin, ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle, Siren } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -86,6 +86,11 @@ function Index() {
             label="Cobra Clinic"
           />
           <QuickLink to="/lrs" icon={<Truck className="size-5" />} label="LRS" />
+          <QuickLink
+            to="/report-hub"
+            icon={<Siren className="size-5" />}
+            label="Report Hub"
+          />
         </div>
         <Button asChild variant="outline" className="w-full">
           <a href="https://31fss.com/first-31-pcs-start/" target="_blank" rel="noopener noreferrer"><ExternalLink className="size-4" /> Newcomers</a>
