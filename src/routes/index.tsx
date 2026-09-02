@@ -31,9 +31,7 @@ function Index() {
             <h1 className="text-2xl font-bold mt-1 leading-tight">Aviano Air Base</h1>
           </div>
         </div>
-        <p className="opacity-90 mt-2 text-sm">
-          Your hub for base services, events, and emergency information.
-        </p>
+        <p className="opacity-90 mt-2 text-sm">Return with honor</p>
       </header>
 
       <section className="px-5 py-6 max-w-xl mx-auto space-y-4">
