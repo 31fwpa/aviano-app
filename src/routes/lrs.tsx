@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   Package,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { resolveDocument } from "@/lib/documents";
+import { resolveDocument, isInAppDocument } from "@/lib/documents";
 
 export const Route = createFileRoute("/lrs")({
   head: () => ({
@@ -395,13 +395,20 @@ function ResourceLink({ item }: { item: Resource }) {
       </div>
     );
   }
+  const rowClass =
+    "flex items-center gap-2 py-2 px-3 -mx-1 rounded-md hover:bg-accent transition text-sm";
+  // Documents bundled in the app open in the in-app viewer (works offline);
+  // anything else is a website link and leaves for the in-app browser.
+  if (isInAppDocument(url)) {
+    return (
+      <Link to="/document" search={{ doc: url.split("doc=")[1] }} className={rowClass}>
+        <FileText className="size-4 shrink-0 text-primary" />
+        <span className="flex-1">{item.label}</span>
+      </Link>
+    );
+  }
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-2 py-2 px-3 -mx-1 rounded-md hover:bg-accent transition text-sm"
-    >
+    <a href={url} target="_blank" rel="noopener noreferrer" className={rowClass}>
       <FileText className="size-4 shrink-0 text-primary" />
       <span className="flex-1">{item.label}</span>
     </a>

@@ -15,6 +15,7 @@ import { Route as MedicalGroupRouteImport } from './routes/medical-group'
 import { Route as LrsRouteImport } from './routes/lrs'
 import { Route as HousingRouteImport } from './routes/housing'
 import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as DocumentRouteImport } from './routes/document'
 import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
@@ -49,6 +50,11 @@ const EmergencyRoute = EmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocumentRoute = DocumentRouteImport.update({
+  id: '/document',
+  path: '/document',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DirectoryRoute = DirectoryRouteImport.update({
   id: '/directory',
   path: '/directory',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
+  '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
+  '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
+  '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendar'
     | '/directory'
+    | '/document'
     | '/emergency'
     | '/housing'
     | '/lrs'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendar'
     | '/directory'
+    | '/document'
     | '/emergency'
     | '/housing'
     | '/lrs'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendar'
     | '/directory'
+    | '/document'
     | '/emergency'
     | '/housing'
     | '/lrs'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
   DirectoryRoute: typeof DirectoryRoute
+  DocumentRoute: typeof DocumentRoute
   EmergencyRoute: typeof EmergencyRoute
   HousingRoute: typeof HousingRoute
   LrsRoute: typeof LrsRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmergencyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/document': {
+      id: '/document'
+      path: '/document'
+      fullPath: '/document'
+      preLoaderRoute: typeof DocumentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/directory': {
       id: '/directory'
       path: '/directory'
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
   DirectoryRoute: DirectoryRoute,
+  DocumentRoute: DocumentRoute,
   EmergencyRoute: EmergencyRoute,
   HousingRoute: HousingRoute,
   LrsRoute: LrsRoute,

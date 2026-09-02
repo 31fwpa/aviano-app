@@ -124,12 +124,20 @@ log in `MAINTAINER_GUIDE.md`.
 - **Offline-first** — emergency info must survive no-signal situations.
 - **Push via FCM + Supabase, $0/month** — see `MAINTAINER_GUIDE.md` §10 for
   the decision and rejected alternatives.
-- **The embedded FSS Google Calendar** (Calendar screen) is the one piece of
-  live web content — it needs internet and is maintained by FSS, not us.
-- **LRS / Medical Group documents are linked, not bundled** — ~85 PDFs and
-  flyers live on the base website; `src/content/documents.json` maps each
-  filename to its URL, and unpublished ones show "Coming soon". Reasoning:
-  `MAINTAINER_GUIDE.md` §10.
+- **The Calendar reads the 31 FSS events feed live** — the one piece of
+  content that needs internet. The app fetches FSS's iCal feed
+  (`31fss.com/?post_type=tribe_events&ical=1`) and renders it natively, so
+  FSS publishes once on their own site and the app follows automatically;
+  nothing is re-entered here. The last download is cached, so the screen
+  still shows something offline. Two gotchas worth knowing are documented in
+  `src/lib/ical.ts`: the feed's times are wall-clock (not really UTC), and it
+  sends no CORS headers, so native builds fetch it via CapacitorHttp.
+- **Documents are bundled in the app and open offline.** The 45 PDFs we hold
+  ship inside the app (`public/documents/`) and open in an in-app viewer, so
+  someone newly arrived with no Italian SIM can still read PCS and housing
+  paperwork. Anything not bundled falls back to a website link listed in
+  `src/content/documents.json`; anything with neither shows "Coming soon".
+  Reasoning and the size trade-off: `MAINTAINER_GUIDE.md` §10.
 - **External links open in an in-app browser** (`src/lib/native.ts`) so
   people aren't stranded outside the app with no way back.
 - **The launch splash is dismissed by the app, not by a timer.** It holds

@@ -35,6 +35,7 @@ function DocumentPage() {
       return;
     }
     let cancelled = false;
+    let observer: IntersectionObserver | undefined;
     const canvases: HTMLCanvasElement[] = [];
 
     (async () => {
@@ -44,7 +45,8 @@ function DocumentPage() {
         const workerUrl = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")).default;
         pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
-        const pdf = await pdfjs.getDocument(documentFileUrl(decodeURIComponent(doc))).promise;
+        const pdf = await pdfjs.getDocument({ url: documentFileUrl(decodeURIComponent(doc)) })
+          .promise;
         if (cancelled) return;
         setPageCount(pdf.numPages);
 
@@ -52,26 +54,62 @@ function DocumentPage() {
         if (!container) return;
         container.replaceChildren();
 
-        // Render at the container's width, capped for memory on long documents.
         const width = Math.min(container.clientWidth, 1400);
+        // Cap the pixel ratio: a phone at 3x on a 20-page document would hold a
+        // lot of bitmap for no visible gain.
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+        // Lay out correctly-sized placeholders first, then paint each page only
+        // as it nears the viewport. Rendering all pages up front is what makes
+        // long PDFs stall on a phone.
+        const pending = new Map<HTMLCanvasElement, number>();
         for (let n = 1; n <= pdf.numPages; n++) {
           if (cancelled) return;
           const page = await pdf.getPage(n);
           const base = page.getViewport({ scale: 1 });
-          const scale = (width / base.width) * Math.min(window.devicePixelRatio || 1, 2);
-          const viewport = page.getViewport({ scale });
-
+          const viewport = page.getViewport({ scale: (width / base.width) * dpr });
           const canvas = document.createElement("canvas");
           canvas.width = viewport.width;
           canvas.height = viewport.height;
           canvas.className = "w-full h-auto rounded-lg border border-border bg-white shadow-sm";
-          const ctx = canvas.getContext("2d");
-          if (!ctx) continue;
           container.appendChild(canvas);
           canvases.push(canvas);
-          await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+          pending.set(canvas, n);
         }
         if (!cancelled) setStatus("ready");
+
+        const paint = async (canvas: HTMLCanvasElement) => {
+          const n = pending.get(canvas);
+          if (n === undefined) return;
+          pending.delete(canvas); // paint once
+          const page = await pdf.getPage(n);
+          const base = page.getViewport({ scale: 1 });
+          const viewport = page.getViewport({ scale: (width / base.width) * dpr });
+          // v6: pass `canvas`, not `canvasContext` — supplying both hangs the
+          // render task.
+          await page.render({ canvas, viewport }).promise;
+        };
+
+        // Paint the opening pages immediately so something is on screen right
+        // away, and let the rest fill in as they approach the viewport. Each
+        // page is painted independently — a slow page must not block the
+        // others, which is what a sequential await chain would do.
+        const EAGER_PAGES = 2;
+        for (const c of canvases.slice(0, EAGER_PAGES)) void paint(c);
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                void paint(e.target as HTMLCanvasElement);
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "800px 0px" },
+        );
+        for (const c of canvases.slice(EAGER_PAGES)) io.observe(c);
+        observer = io;
       } catch (err) {
         console.error("[document] failed to render", err);
         if (!cancelled) setStatus("error");
@@ -80,6 +118,7 @@ function DocumentPage() {
 
     return () => {
       cancelled = true;
+      observer?.disconnect();
       // Free the canvas memory rather than leaving it to the GC — long PDFs
       // can hold a lot of bitmap.
       for (const c of canvases) {

@@ -413,7 +413,37 @@ only), and the corrected announcement/phone content.
 > not an update. Diff it, take the intent, and re-apply it on top of the
 > current code — never copy the folder over the repo.
 
-### Documents (PDFs and flyers) are linked, not bundled
+### REVERSED 2026-08-18: documents are now bundled in the app
+
+The decision below (link, don't bundle) was **reversed**. The 45 PDFs we hold
+now ship inside the app and open in an in-app viewer, working with no signal.
+
+**What changed the call:**
+
+- **Size was the weakest objection and it didn't survive the numbers.** The
+  app goes from ~10 MB to ~34 MB. Play Store's limit is 200 MB; this is
+  unremarkable. (PDFs are already compressed — 37 MB of them zip to 34 MB, so
+  the bundle grows by roughly the full file size.)
+- **The people who need these documents most often have the least
+  connectivity.** Someone who has just PCS'd in may have no Italian SIM and no
+  home internet — and PCS, housing, and IAR paperwork is exactly what they
+  need. The earlier assumption that these are "read at a desk on wifi" was
+  wrong for the highest-need user.
+- **Bundling isn't blocked.** Publishing to AFPIMS needs 508 review, public
+  release review, and site access. Bundling ships now.
+
+**What it cost:** an in-app PDF viewer (`src/routes/document.tsx`), because
+**Android's WebView cannot render a PDF** — a plain link to a bundled file
+opens a blank screen. pdf.js renders to canvas instead, identically on both
+platforms, with no dependency on the user having a PDF app installed.
+
+**What we gave up:** a corrected document now requires a store release to
+reach phones. That is the accepted trade-off, and it is the same one the app
+already makes for all its other content. `documents.json` still works for
+anything not bundled, so publishing to the website remains available per
+document.
+
+### Superseded: why documents were originally linked, not bundled
 
 The LRS and Medical Group pages reference ~85 PDFs and info flyers. In
 Lovable those files live on Lovable's own CDN, at URLs that only resolve

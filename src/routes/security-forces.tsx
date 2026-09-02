@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Shield,
   Clock,
@@ -9,7 +9,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { resolveDocument } from "@/lib/documents";
+import { resolveDocument, isInAppDocument } from "@/lib/documents";
 
 export const Route = createFileRoute("/security-forces")({
   head: () => ({
@@ -86,7 +86,19 @@ function QuickLinksSection() {
         <ul className="space-y-2">
           {quickLinks.map(({ label, icon: Icon, href }) => (
             <li key={label}>
-              {href ? (
+              {href && isInAppDocument(href) ? (
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 text-left h-auto py-3"
+                  asChild
+                >
+                  {/* Bundled document — opens in the in-app viewer, works offline */}
+                  <Link to="/document" search={{ doc: href.split("doc=")[1] }}>
+                    <Icon className="size-4 text-primary shrink-0" />
+                    <span className="break-words">{label}</span>
+                  </Link>
+                </Button>
+              ) : href ? (
                 <Button
                   variant="outline"
                   className="w-full justify-start gap-2 text-left h-auto py-3"

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Clock,
   Heart,
@@ -16,7 +16,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { resolveDocument } from "@/lib/documents";
+import { resolveDocument, isInAppDocument } from "@/lib/documents";
 
 export const Route = createFileRoute("/medical-group")({
   head: () => ({
@@ -152,16 +152,28 @@ function HoursSection() {
 
 function LinkButton({ item, icon: Icon, iconClass }: { item: LinkItem; icon: React.ElementType; iconClass?: string }) {
   const href = item.tel ? `tel:${item.tel}` : item.href;
+  const inner = (
+    <>
+      <Icon className={`size-4 shrink-0 ${iconClass ?? "text-primary"}`} />
+      <span className="break-words">{item.label}</span>
+    </>
+  );
+  const buttonClass = "w-full justify-start gap-2 text-left h-auto py-3";
+  // Bundled documents open in the in-app viewer so they work with no signal.
+  if (href && isInAppDocument(href)) {
+    return (
+      <Button variant="outline" className={buttonClass} asChild>
+        <Link to="/document" search={{ doc: href.split("doc=")[1] }}>
+          {inner}
+        </Link>
+      </Button>
+    );
+  }
   if (href) {
     return (
-      <Button
-        variant="outline"
-        className="w-full justify-start gap-2 text-left h-auto py-3"
-        asChild
-      >
+      <Button variant="outline" className={buttonClass} asChild>
         <a href={href} target={item.tel ? undefined : "_blank"} rel="noopener noreferrer">
-          <Icon className={`size-4 shrink-0 ${iconClass ?? "text-primary"}`} />
-          <span className="break-words">{item.label}</span>
+          {inner}
         </a>
       </Button>
     );
