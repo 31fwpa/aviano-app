@@ -9,21 +9,37 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SoggiornoRouteImport } from './routes/soggiorno'
 import { Route as SecurityForcesRouteImport } from './routes/security-forces'
+import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as ReportHubRouteImport } from './routes/report-hub'
 import { Route as PaRouteImport } from './routes/pa'
+import { Route as MfrcRouteImport } from './routes/mfrc'
 import { Route as MedicalGroupRouteImport } from './routes/medical-group'
 import { Route as LrsRouteImport } from './routes/lrs'
 import { Route as HousingRouteImport } from './routes/housing'
+import { Route as FssRouteImport } from './routes/fss'
+import { Route as EpubsRouteImport } from './routes/epubs'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as DocumentRouteImport } from './routes/document'
 import { Route as DirectoryRouteImport } from './routes/directory'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AfnRouteImport } from './routes/afn'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SoggiornoRoute = SoggiornoRouteImport.update({
+  id: '/soggiorno',
+  path: '/soggiorno',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SecurityForcesRoute = SecurityForcesRouteImport.update({
   id: '/security-forces',
   path: '/security-forces',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportHubRoute = ReportHubRouteImport.update({
@@ -34,6 +50,11 @@ const ReportHubRoute = ReportHubRouteImport.update({
 const PaRoute = PaRouteImport.update({
   id: '/pa',
   path: '/pa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfrcRoute = MfrcRouteImport.update({
+  id: '/mfrc',
+  path: '/mfrc',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedicalGroupRoute = MedicalGroupRouteImport.update({
@@ -49,6 +70,16 @@ const LrsRoute = LrsRouteImport.update({
 const HousingRoute = HousingRouteImport.update({
   id: '/housing',
   path: '/housing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FssRoute = FssRouteImport.update({
+  id: '/fss',
+  path: '/fss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpubsRoute = EpubsRouteImport.update({
+  id: '/epubs',
+  path: '/epubs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmergencyRoute = EmergencyRouteImport.update({
@@ -71,6 +102,11 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AfnRoute = AfnRouteImport.update({
+  id: '/afn',
+  path: '/afn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -79,107 +115,163 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/afn': typeof AfnRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
   '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
+  '/epubs': typeof EpubsRoute
+  '/fss': typeof FssRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
+  '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
   '/report-hub': typeof ReportHubRoute
+  '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
+  '/soggiorno': typeof SoggiornoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/afn': typeof AfnRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
   '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
+  '/epubs': typeof EpubsRoute
+  '/fss': typeof FssRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
+  '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
   '/report-hub': typeof ReportHubRoute
+  '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
+  '/soggiorno': typeof SoggiornoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/afn': typeof AfnRoute
   '/calendar': typeof CalendarRoute
   '/directory': typeof DirectoryRoute
   '/document': typeof DocumentRoute
   '/emergency': typeof EmergencyRoute
+  '/epubs': typeof EpubsRoute
+  '/fss': typeof FssRoute
   '/housing': typeof HousingRoute
   '/lrs': typeof LrsRoute
   '/medical-group': typeof MedicalGroupRoute
+  '/mfrc': typeof MfrcRoute
   '/pa': typeof PaRoute
   '/report-hub': typeof ReportHubRoute
+  '/safety': typeof SafetyRoute
   '/security-forces': typeof SecurityForcesRoute
+  '/soggiorno': typeof SoggiornoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/afn'
     | '/calendar'
     | '/directory'
     | '/document'
     | '/emergency'
+    | '/epubs'
+    | '/fss'
     | '/housing'
     | '/lrs'
     | '/medical-group'
+    | '/mfrc'
     | '/pa'
     | '/report-hub'
+    | '/safety'
     | '/security-forces'
+    | '/soggiorno'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/afn'
     | '/calendar'
     | '/directory'
     | '/document'
     | '/emergency'
+    | '/epubs'
+    | '/fss'
     | '/housing'
     | '/lrs'
     | '/medical-group'
+    | '/mfrc'
     | '/pa'
     | '/report-hub'
+    | '/safety'
     | '/security-forces'
+    | '/soggiorno'
   id:
     | '__root__'
     | '/'
+    | '/afn'
     | '/calendar'
     | '/directory'
     | '/document'
     | '/emergency'
+    | '/epubs'
+    | '/fss'
     | '/housing'
     | '/lrs'
     | '/medical-group'
+    | '/mfrc'
     | '/pa'
     | '/report-hub'
+    | '/safety'
     | '/security-forces'
+    | '/soggiorno'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AfnRoute: typeof AfnRoute
   CalendarRoute: typeof CalendarRoute
   DirectoryRoute: typeof DirectoryRoute
   DocumentRoute: typeof DocumentRoute
   EmergencyRoute: typeof EmergencyRoute
+  EpubsRoute: typeof EpubsRoute
+  FssRoute: typeof FssRoute
   HousingRoute: typeof HousingRoute
   LrsRoute: typeof LrsRoute
   MedicalGroupRoute: typeof MedicalGroupRoute
+  MfrcRoute: typeof MfrcRoute
   PaRoute: typeof PaRoute
   ReportHubRoute: typeof ReportHubRoute
+  SafetyRoute: typeof SafetyRoute
   SecurityForcesRoute: typeof SecurityForcesRoute
+  SoggiornoRoute: typeof SoggiornoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/soggiorno': {
+      id: '/soggiorno'
+      path: '/soggiorno'
+      fullPath: '/soggiorno'
+      preLoaderRoute: typeof SoggiornoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/security-forces': {
       id: '/security-forces'
       path: '/security-forces'
       fullPath: '/security-forces'
       preLoaderRoute: typeof SecurityForcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report-hub': {
@@ -194,6 +286,13 @@ declare module '@tanstack/react-router' {
       path: '/pa'
       fullPath: '/pa'
       preLoaderRoute: typeof PaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfrc': {
+      id: '/mfrc'
+      path: '/mfrc'
+      fullPath: '/mfrc'
+      preLoaderRoute: typeof MfrcRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medical-group': {
@@ -215,6 +314,20 @@ declare module '@tanstack/react-router' {
       path: '/housing'
       fullPath: '/housing'
       preLoaderRoute: typeof HousingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fss': {
+      id: '/fss'
+      path: '/fss'
+      fullPath: '/fss'
+      preLoaderRoute: typeof FssRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epubs': {
+      id: '/epubs'
+      path: '/epubs'
+      fullPath: '/epubs'
+      preLoaderRoute: typeof EpubsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/emergency': {
@@ -245,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/afn': {
+      id: '/afn'
+      path: '/afn'
+      fullPath: '/afn'
+      preLoaderRoute: typeof AfnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -257,16 +377,22 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AfnRoute: AfnRoute,
   CalendarRoute: CalendarRoute,
   DirectoryRoute: DirectoryRoute,
   DocumentRoute: DocumentRoute,
   EmergencyRoute: EmergencyRoute,
+  EpubsRoute: EpubsRoute,
+  FssRoute: FssRoute,
   HousingRoute: HousingRoute,
   LrsRoute: LrsRoute,
   MedicalGroupRoute: MedicalGroupRoute,
+  MfrcRoute: MfrcRoute,
   PaRoute: PaRoute,
   ReportHubRoute: ReportHubRoute,
+  SafetyRoute: SafetyRoute,
   SecurityForcesRoute: SecurityForcesRoute,
+  SoggiornoRoute: SoggiornoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

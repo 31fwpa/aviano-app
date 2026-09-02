@@ -39,13 +39,31 @@ const passAndRegHours = [
 ];
 
 const quickLinks = [
-  { label: "AFI License Application", icon: FileText },
-  { label: "AFI Application Process (Driving License)", icon: FileText },
-  { label: "IAR Checklist", icon: Shield },
+  {
+    label: "AFI License Application",
+    icon: FileText,
+    href: resolveDocument("AFI License Application.pdf"),
+  },
+  {
+    label: "AFI Application Process (Driving License)",
+    icon: FileText,
+    href: "https://www.31fss.com/driving-overseas",
+  },
+  { label: "IAR Checklist", icon: Shield, href: resolveDocument("IAR Checklist.pdf") },
   { label: "IAR (Installation Access Request)", icon: Shield, href: resolveDocument("IAR.pdf") },
-  { label: "Kiosk Sign-In", icon: Shield },
-  { label: "Vehicle Registration", icon: Car },
-  { label: "Incident Report Form", icon: FileText },
+  {
+    label: "Kiosk Sign-In",
+    icon: Shield,
+    href: "https://qkonline.queuekiosk.com/?QID=97&QTKN=avi389ksd8x83hf3s",
+  },
+  {
+    label: "Vehicle Registration",
+    icon: Car,
+    href: "https://www.31fss.com/vehicle-registration",
+  },
+  // The reporting forms live on the Report Hub, which also carries the
+  // emergency guidance that belongs alongside them.
+  { label: "Incident Report Form", icon: FileText, to: "/report-hub" },
 ];
 
 function HoursSection() {
@@ -84,9 +102,20 @@ function QuickLinksSection() {
       </CardHeader>
       <CardContent>
         <ul className="space-y-2">
-          {quickLinks.map(({ label, icon: Icon, href }) => (
+          {quickLinks.map(({ label, icon: Icon, href, to }) => (
             <li key={label}>
-              {href && isInAppDocument(href) ? (
+              {to ? (
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 text-left h-auto py-3"
+                  asChild
+                >
+                  <Link to={to}>
+                    <Icon className="size-4 text-primary shrink-0" />
+                    <span className="break-words">{label}</span>
+                  </Link>
+                </Button>
+              ) : href && isInAppDocument(href) ? (
                 <Button
                   variant="outline"
                   className="w-full justify-start gap-2 text-left h-auto py-3"
@@ -114,13 +143,18 @@ function QuickLinksSection() {
                   </a>
                 </Button>
               ) : (
+                // No link published for this one yet. Show it honestly rather
+                // than a button that appears to work and doesn't.
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2 text-left h-auto py-3"
-                  onClick={() => alert(`TODO: Link for "${label}"`)}
+                  disabled
+                  className="w-full justify-start gap-2 text-left h-auto py-3 opacity-70"
                 >
-                  <Icon className="size-4 text-primary shrink-0" />
-                  <span className="break-words">{label}</span>
+                  <Icon className="size-4 shrink-0" />
+                  <span className="flex-1 min-w-0 break-words whitespace-normal">{label}</span>
+                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold shrink-0">
+                    Coming soon
+                  </span>
                 </Button>
               )}
             </li>

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Phone, MapPin, ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle, Siren } from "lucide-react";
+import { ExternalLink, Megaphone, Home, Shield, Stethoscope, Heart, Truck, AlertTriangle, Users, FileText, Ticket, HardHat, Radio, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -38,12 +38,20 @@ function Index() {
 
       <section className="px-5 py-6 max-w-xl mx-auto space-y-4">
 
+        {/* Emergency, Calendar and Directory all live in the bottom nav, so
+            they aren't repeated here. This banner points at Report Hub, which
+            has no other prominent entry point. */}
         <Link
-          to="/emergency"
+          to="/report-hub"
           className="flex items-center gap-3 p-4 rounded-lg bg-destructive text-destructive-foreground hover:opacity-95 transition"
         >
-          <AlertTriangle className="size-5" />
-          <span className="font-semibold">Emergency</span>
+          <AlertTriangle className="size-5 shrink-0" />
+          <span className="min-w-0">
+            <span className="block font-semibold">Report Hub</span>
+            <span className="block text-xs opacity-90">
+              Drone sightings, incidents, suspicious activity
+            </span>
+          </span>
         </Link>
 
         <div>
@@ -66,8 +74,6 @@ function Index() {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <QuickLink to="/calendar" icon={<MapPin className="size-5" />} label="Events" />
-          <QuickLink to="/directory" icon={<Phone className="size-5" />} label="Phone book" />
           <QuickLink to="/pa" icon={<Megaphone className="size-5" />} label="Public Affairs" />
           <QuickLink to="/housing" icon={<Home className="size-5" />} label="Housing" />
           <QuickLink
@@ -86,11 +92,16 @@ function Index() {
             label="Cobra Clinic"
           />
           <QuickLink to="/lrs" icon={<Truck className="size-5" />} label="LRS" />
+          <QuickLink to="/mfrc" icon={<Users className="size-5" />} label="M & FRC" />
           <QuickLink
-            to="/report-hub"
-            icon={<Siren className="size-5" />}
-            label="Report Hub"
+            to="/soggiorno"
+            icon={<FileText className="size-5" />}
+            label="Soggiorno"
           />
+          <QuickLink to="/fss" icon={<Ticket className="size-5" />} label="31 FSS" />
+          <QuickLink to="/safety" icon={<HardHat className="size-5" />} label="Safety" />
+          <QuickLink to="/afn" icon={<Radio className="size-5" />} label="AFN" />
+          <QuickLink to="/epubs" icon={<BookOpen className="size-5" />} label="E-Pubs" />
         </div>
         <Button asChild variant="outline" className="w-full">
           <a href="https://31fss.com/first-31-pcs-start/" target="_blank" rel="noopener noreferrer"><ExternalLink className="size-4" /> Newcomers</a>
