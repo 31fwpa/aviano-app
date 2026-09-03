@@ -79,7 +79,7 @@ const sections: Section[] = [
           { label: "Date Change Request", pdf: "Date Change Request.pdf" },
           {
             label: "Stateside Authorizations for Alcohol",
-            href: "https://www.ttb.gov/wine/alcohol-beverage-control-boards",
+            href: "https://www.ttb.gov/business-central/alcohol-beverage-control-boards",
           },
         ],
       },

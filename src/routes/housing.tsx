@@ -22,14 +22,17 @@ const sections: Section[] = [
     children: [
       { folder: "Aviano Home Fuels Website", items: [{ title: "Website", url: "https://www.avianohomefuels.com" }] },
       { folder: "Pay Online", items: [{ title: "Pay Online", url: "https://www.starnik.net/UtilityTrakR/UT6/Current/R_default.aspx" }] },
-      { folder: "Appointment Sign-In", items: [{ title: "Appointment Sign-In", url: "https://www.queuekiosk.com/webaccess/?QID=65&QTKN=avh83kk8s3jh32" }] },
+      { folder: "Appointment Sign-In", items: [{ title: "Appointment Sign-In", url: "https://qkonline.queuekiosk.com/?QID=65&QTKN=avh83kk8s3jh32" }] },
     ],
   },
   {
     label: "Housing",
     children: [
       { folder: "Appointment Sign-In", items: [{ title: "Appointment Sign-In", url: "https://qkonline.queuekiosk.com/?QID=65&QTKN=avh83kk8s3jh32" }] },
-      { folder: "Aviano AB Housing", items: [{ title: "Aviano AB Housing", url: "https://www.housing.af.mil/Home/Units/Aviano/" }] },
+      // The old /Home/Units/Aviano/ path soft-404s: it keeps the URL but serves
+      // the generic DAF Housing page with no Aviano content. Linking the site
+      // root instead, which is a real page (HEAT tool, housing guidance).
+      { folder: "Aviano AB Housing", items: [{ title: "Air Force Housing", url: "https://www.housing.af.mil/" }] },
       { folder: "Homes.mil", items: [{ title: "Homes.mil", url: "https://www.homes.mil/homes/DispatchServlet/HomesEntry" }] },
       {
         folder: "Housing PDFs",
@@ -49,7 +52,10 @@ const sections: Section[] = [
       {
         folder: "FMO",
         items: [
-          { title: "Furnishing Management", url: "https://aviano.usaf.afpims.mil/Portals/1/Housing/P3S4%20FMS%20updated.pdf?ver=zRePb_TcDWW5lIAXjctKLA%3d%3d" },
+          // Served from the public www.aviano.af.mil host rather than the
+          // aviano.usaf.afpims.mil CMS backend — same file, but the public
+          // domain is the one reachable from ordinary networks.
+          { title: "Furnishing Management", url: "https://www.aviano.af.mil/Portals/1/Housing/P3S4%20FMS%20updated.pdf?ver=zRePb_TcDWW5lIAXjctKLA%3d%3d" },
           { title: "Appliance Manuals", url: "https://s3-us-gov-west-1.amazonaws.com/afconnectcms/uploads/1064/images/thumb/references/pdf/APPLIANCEMANUALS2022_1648802731.pdf" },
         ],
       },

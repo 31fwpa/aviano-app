@@ -189,19 +189,10 @@ function SecurityForcesPage() {
 
           <TabsContent value="hours" className="mt-4 space-y-4">
             <HoursSection />
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="size-5 text-primary" />
-                  Alternate Gate Hours
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Down Day Gate Hours — check back for updates.
-                </p>
-              </CardContent>
-            </Card>
+            {/* The "Alternate Gate Hours" card was removed for release: its only
+                content was "check back for updates", which reads as an unfinished
+                section (App Store Guideline 2.1 rejects placeholder content).
+                Restore it here once SFS publishes actual down-day gate hours. */}
           </TabsContent>
 
           <TabsContent value="links" className="mt-4">

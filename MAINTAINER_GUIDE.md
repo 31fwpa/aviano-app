@@ -464,6 +464,40 @@ URL is filled in, the pages show their built-in "Coming soon" state, so
 nothing ever renders as a broken link. Adding a document is a **content
 edit** — see `CONTENT_EDITING_GUIDE.md`.
 
+### How to test outbound links (2026-09-03)
+
+Link rot is the app's main ongoing maintenance burden. How you test matters
+more than it looks, and the obvious method is wrong:
+
+- **`curl` from a laptop is not evidence.** Most `.mil` hosts and many
+  commercial ones (Lufthansa, DoDEA, Red Cross, AFN) return `403` or no
+  response to `curl` while working perfectly in a real browser. Three links
+  were nearly deleted on this bad evidence. **A non-200 from curl proves
+  nothing.**
+- **Status codes lie in the other direction too.** Several links returned
+  `HTTP 200` while serving the wrong page — a *soft 404*. `aviano.af.mil`
+  keeps the URL in the address bar and quietly serves "News"; five
+  `31fss.com` links returned 200 but redirected to a bare banner JPEG;
+  `shopmyexchange.com` returned 200 with "Content not found" in the body.
+  **Check the page title and body text, not the status code.**
+- **The network matters.** On base wifi every `.mil` host stalled; on
+  cellular the same links worked. Test on more than one network before
+  concluding anything.
+- **The phone is the environment that counts.** `scripts/test-links-on-phone.sh`
+  opens each URL on a connected Android phone and screenshots the result.
+  Reviewing those screenshots is the only test that shows what a user
+  actually gets — a page, a CAC prompt, or an error. Leave the phone alone
+  while it runs.
+- **A CAC-locked link is not a broken link**, but it is useless in a public
+  app; those were removed deliberately.
+
+When a link does die, prefer finding the moved page over deleting the entry —
+most "dead" links have just moved. e-Publishing shuffles publications between
+owning-org folders without redirecting, and its own product search API
+(`/DesktopModules/MVC/EPUBS/EPUB/GetPubsSearchView/?keyword=<pub number>`)
+gives the current URL. Keep the entry's phone number and details even when no
+replacement page exists — clear only the `url` field.
+
 ### The project must NOT live in OneDrive
 
 See [Section 2](#2-who-runs-it-accounts--access). Git and OneDrive fight over the

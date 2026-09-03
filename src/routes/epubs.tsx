@@ -32,7 +32,7 @@ const publications = [
   {
     label: "The Tongue and Quill",
     pub: "AFH 33-337",
-    href: "https://static.e-publishing.af.mil/production/1/administrative_assistant/publication/afh33-337/afh33-337.pdf",
+    href: "https://static.e-publishing.af.mil/production/1/saf_aa/publication/afh33-337/afh33-337.pdf",
   },
   {
     label: "Dress and Personal Appearance",
@@ -40,20 +40,24 @@ const publications = [
     href: "https://static.e-publishing.af.mil/production/1/af_a1/publication/dafi36-2903/dafi36-2903.pdf",
   },
   {
-    label: "The Little Brown Book",
-    pub: "Enlisted Force Structure · AFH 36-2618",
-    href: "https://static.e-publishing.af.mil/production/1/af_a1/publication/afh36-2618/afh36-2618.pdf",
-  },
-  {
     label: "Guide to Protocol",
     pub: "AFPAM 34-1202",
-    href: "https://static.e-publishing.af.mil/production/1/saf_ds/publication/afpam34-1202/afpam34-1202.pdf",
+    href: "https://static.e-publishing.af.mil/production/1/administrative_assistant/publication/afpam34-1202/afpam34-1202.pdf",
   },
-  {
-    label: "The Little Blue Book",
-    pub: "America's Air Force: A Profession of Arms",
-    href: "https://www.airman.af.mil/Little-Blue-Book/",
-  },
+  // "The Little Blue Book" removed: airman.af.mil no longer resolves on any
+  // network tested, and no other official copy could be retrieved. Restore
+  // this entry if PACE publishes a current URL.
+  //
+  // "The Little Brown Book" (Enlisted Force Structure, AFH 36-2618) removed:
+  // its old URL 404s, and e-Publishing's own product search returns nothing
+  // for 36-2618 in either the current or the obsolete catalog — the number is
+  // no longer published. Restore it if the DAF reissues it.
+  //
+  // Note on the URLs above: e-Publishing moves publications between owning-org
+  // folders without redirecting (Tongue and Quill went administrative_assistant
+  // → saf_aa, Guide to Protocol went the other way). A 404 here usually means
+  // the folder changed, not that the pub is gone — re-check with the product
+  // search at www.e-publishing.af.mil before deleting an entry.
 ];
 
 function EpubsPage() {
